@@ -61,3 +61,48 @@ python packaging/verify_windows.py --require-signed --require-defender
 These options reject unavailable scans or missing/invalid signatures. They do
 not complete dependency attribution or physical Windows validation; see
 [distribution notes](THIRD_PARTY.md) and [Windows validation](docs/windows-validation.md).
+
+
+## Source review: 0.0.3 — 25 October 2026
+
+Fixed application issues:
+
+- External PDF link clicks previously passed arbitrary schemes to the operating
+  system. The reader now permits HTTP/HTTPS with a host and no URL credentials,
+  and email links without attachment parameters or control characters in the
+  recipient. File, relative, JavaScript/data and custom-protocol links are blocked.
+  A real PDF click regression verifies that blocked links never reach the OS handler.
+- Favorites imports now read at most 32 MB plus one overflow-detection byte, then
+  validate every row before any insertion. Boolean/oversized page numbers, non-finite
+  or extreme coordinates, NUL/empty paths and oversized text are rejected. Existing
+  Favorites remain unchanged when any row is invalid.
+- Show in Folder resolves Explorer through GetWindowsDirectoryW and passes an
+  absolute executable path with separate arguments. It no longer searches the
+  working directory or PATH for explorer.exe. API lookup failures stop the action.
+  Native Windows execution still needs its own platform validation.
+
+Dependency audit found three pypdf 6.21.1 denial-of-service advisories:
+CVE-2026-115572, CVE-2026-115585 and CVE-2026-115580. The minimum supported version
+and tested lock now use **pypdf 6.21.2**, which the advisories list as fixed.
+A repeat pip-audit check of the installed eight runtime packages reported **zero
+known advisories and zero skipped packages**. This is a point-in-time package
+advisory lookup, not a scan of every native component bundled by Qt/PDFium or the OS.
+
+Bandit scanned application and packaging Python files with no parse errors. It
+reported **5 medium and 91 low findings**; none are hidden or suppressed. The five
+medium SQL warnings use identifiers from constant table/column lists or explicit
+validator dictionaries, with imported values bound as SQL parameters. The low
+findings concern development smoke-test assertions, subprocess imports and argument-list
+invocations in trusted build/OS helpers. This review found no untrusted shell command
+construction in those paths. Scanner warnings are not represented as a clean scan.
+
+Reproduce the code scan with `bandit -r mellow packaging`. Audit the exact installed
+runtime versions with pip-audit; current runtime package names are numpy, pypdf,
+PySide6, PySide6_Addons, PySide6_Essentials, PySide6_Pdf, PySide6_WebEngine and shiboken6.
+Audit tools were installed separately for review and are not application dependencies.
+No user PDF data was sent to the advisory service.
+
+These checks do not certify that arbitrary PDFs are safe. Native parser bugs,
+resource exhaustion and future advisories remain possible. No new Windows Defender
+scan, executable build, certificate signature or release is claimed for 0.0.3.
+Functional test evidence is in [VALIDATION.md](VALIDATION.md).

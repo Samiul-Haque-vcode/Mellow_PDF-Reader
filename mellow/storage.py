@@ -1,4 +1,5 @@
 import json
+import math
 import sqlite3
 from pathlib import Path
 from .saved_locations import path_key,destination_key,rewrite_paths,document_paths
@@ -136,20 +137,28 @@ class Store:
     def export_favorites(self, path):
         Path(path).write_text(json.dumps(self.locations('favorite'), indent=2), encoding='utf8')
     def import_favorites(self, path):
-        data = json.loads(Path(path).read_text(encoding='utf8'))
-        if not isinstance(data, list) or len(data) > 100000:
-            raise ValueError('Invalid Favorites file')
-        validated = []
+        limit=32*1024*1024
+        with Path(path).open('rb') as source:content=source.read(limit+1)
+        if len(content)>limit:raise ValueError('Favorites file exceeds the 32 MB limit')
+        def reject_constant(value):raise ValueError('Invalid number in Favorites file')
+        try:data=json.loads(content,parse_constant=reject_constant)
+        except (UnicodeError,RecursionError) as error:raise ValueError('Invalid Favorites file') from error
+        if not isinstance(data,list) or len(data)>100000:raise ValueError('Invalid Favorites file')
+        validated=[]
+        def text(value):return isinstance(value,str) and len(value)<=100000 and '\x00' not in value
         for r in data:
-            if not isinstance(r, dict) or not isinstance(r.get('path'), str) or not isinstance(r.get('title'), str):
+            if not isinstance(r,dict) or not text(r.get('path')) or not r['path'] or not text(r.get('title')):
                 raise ValueError('Invalid Favorite entry')
-            page = r.get('page')
-            if not isinstance(page, int) or page < 0:
-                raise ValueError('Invalid page')
-            label=r.get('label')
-            if label is not None and not isinstance(label,str):
-                raise ValueError('Invalid page label')
-            validated.append((r['path'], page, r['title'], float(r.get('x', 0)), float(r.get('y', 0)),label))
+            page=r.get('page');label=r.get('label')
+            if type(page) is not int or not 0<=page<1000000:raise ValueError('Invalid page')
+            if label is not None and not text(label):raise ValueError('Invalid page label')
+            coordinates=[]
+            for key in ('x','y'):
+                value=r.get(key,0)
+                if type(value) not in (int,float) or abs(value)>1e9 or not math.isfinite(value):
+                    raise ValueError('Invalid Favorite position')
+                coordinates.append(float(value))
+            validated.append((r['path'],page,r['title'],*coordinates,label))
         with self.db:
             self.db.executemany("INSERT INTO locations(kind,path,page,title,x,y,label) VALUES('favorite',?,?,?,?,?,?)", validated)
 

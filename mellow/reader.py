@@ -1,6 +1,6 @@
 from shiboken6 import isValid
 from PySide6.QtCore import Qt, QPointF, Signal, QTimer, QModelIndex, QMargins, QEvent,QRectF
-from PySide6.QtGui import QColor,QPainter,QPalette,QAction,QKeySequence,QTransform,QDesktopServices,QPen
+from PySide6.QtGui import QColor,QPainter,QPalette,QAction,QKeySequence,QTransform,QPen
 from PySide6.QtPdf import QPdfLinkModel
 from PySide6.QtPdfWidgets import QPdfView
 from .theme import PageTheme, normalize_theme, canvas_color, tuning_values,overlay_colors
@@ -585,7 +585,9 @@ class Reader(SelectionControls,QPdfView):
             elif self._pressed_link:
                 self.previewRequested.emit(self,self._pressed_link)
             elif self._pressed_url:
-                QDesktopServices.openUrl(self._pressed_url)
+                from .platform import open_external_link
+                if not open_external_link(self._pressed_url):
+                    self.selection_hint('Link could not be opened. Only web and email links are supported.')
             self._pressed_link=None
             self._pressed_url=None
             event.accept()

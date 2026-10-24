@@ -294,9 +294,10 @@ def test_show_in_folder_uses_argument_list_and_reports_missing_file(app,pdf,monk
     from mellow import platform
     commands=[]
     monkeypatch.setattr(platform.sys,'platform','win32')
+    monkeypatch.setattr(platform,'explorer_executable',lambda:'C:/Windows/explorer.exe')
     monkeypatch.setattr(platform.subprocess,'Popen',lambda args:commands.append(args))
     assert platform.show_in_folder(pdf)
-    assert commands==[['explorer.exe','/select,',str(pdf)]]
+    assert commands==[['C:/Windows/explorer.exe','/select,',str(pdf)]]
     with pytest.raises(FileNotFoundError): platform.show_in_folder(pdf.with_name('missing.pdf'))
 
 

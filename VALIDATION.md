@@ -1,29 +1,24 @@
-# Validation — 0.0.2
+# Validation — 0.0.3
 
-Checked on 25 October 2026: Linux x86_64, Python 3.12, PySide6/Qt 6.12, offscreen Qt platform.
+Checked on 25 October 2026: Linux x86_64, Python 3.12, PySide6/Qt 6.12, offscreen Qt, pypdf 6.21.2.
 
-## Results
-
-- Full suite: **618 passed, 1 Windows-only skip, 1 existing Qt enum deprecation warning in 353.06 seconds**.
-- Focused magnifier/reading-aid preflight: **14 passed in 3.83 seconds**, included in the full suite rather than additional unique tests.
+- Full final suite: **647 passed, 1 Windows-only skip, 1 existing Qt enum deprecation warning in 352.96 seconds**.
+- Security/reading/backup preflight: **66 passed in 19.25 seconds**, overlapping the full suite.
 - Source smoke exited zero: actual PDF rendering, tool previews and metadata backup restoration.
-- App, Windows version resource and installer version agree on **0.0.2**.
-- No native Windows build, installer verification, new antivirus scan or release was performed for this source update. Workflow remains manual-only; push uses `[skip ci]`.
+- App, Windows version resource and installer version are **0.0.3**. Workflow remains manual-only and source push uses `[skip ci]`.
 
-## Debugging
+## Security results
 
-Rapidly pointing at region A, moving to B and returning to A while B was still rendering could leave the magnifier blank. Clearing the displayed image now invalidates its render descriptor too. A stale completion schedules the requested region correctly. A real-PDF regression simulates this sequence and confirms recovery; failure/retry and leave/reentry tests also remain.
+Runtime dependency auditing initially found three known denial-of-service advisories in pypdf 6.21.1. Minimum requirements, the tested Linux lock and the test environment were upgraded to **6.21.2**. A repeat pip-audit query of eight installed runtime packages reported **zero known advisories, zero skips**. Native Qt/PDFium components are not fully covered by a Python package advisory lookup.
 
-The earlier Quick Jump Back/Forward, fixed split proportions, magnifier failure-loop and cache-reentry fixes remain covered. Tests exercise generated real PDFs, text selection/copying, search, outlines, links, diagrams, rotations/crops, split views, sessions, saved places and utilities. Source PDFs remain unchanged.
+Bandit parsed all application/packaging Python files without errors and reported **5 medium / 91 low findings**. Reviewed SQL findings use constant/whitelisted identifiers and bound values. Remaining low warnings concern assertions in diagnostic checks and argument-list subprocess/build helpers. These are reviewed warnings, not a scanner clean bill; see [SECURITY.md](SECURITY.md) for scope and details.
 
-## Excess removed
+New regressions cover blocked URL schemes, email attachments/control characters, URL credentials, actual safe/blocked PDF link clicks, malformed/oversized Favorites, atomic import rejection and fail-closed Windows directory lookup. Existing reader, selection, split, history, rendering, tool, backup and session tests remain.
 
-Removed the unused automatic-release publishing helper and its eight publishing-only tests, plus the unused icon-generation utility. No reader or PDF utility feature was removed. Runtime branding assets, installer/build verification, signing support, notice collection and application regressions remain. The suite count changes from 625 to 618 passing tests: eight retired publishing tests and one new magnifier race regression.
-
-Source remains readable. No videos, demo screenshots, compiled binaries, caches, user metadata or sample PDFs are committed.
+A preliminary regression run was stopped when the vulnerable dependency was discovered. Only the completed run against pypdf 6.21.2 is counted above. Audit tools and temporary reports were kept outside application dependencies and repository contents.
 
 ## Limits
 
-Search/copying require an extractable text layer; no OCR is included. Complex text ordering, reference matching and image-color preservation are heuristic. Native text extraction and some PDF operations cannot be interrupted mid-call. Themes are comfort preferences, not medical claims.
+No new native Windows build, installed-app test, Defender scan, certificate signature or release was performed. The Windows API launch path has unit coverage; actual native verification remains separate. Rebuild the application to apply these source/dependency fixes to an installed copy.
 
-Physical touchpad, mixed-DPI, GPU/fullscreen, Snap and accessibility testing remain separate; see [Windows validation](docs/windows-validation.md). No signed executable is supplied. Review the exact Qt/PDFium attribution bundle and other binary-distribution obligations in [THIRD_PARTY.md](THIRD_PARTY.md).
+Text extraction, reference matching and color preservation retain their documented limitations. Physical touchpad, mixed-DPI, GPU/fullscreen, Snap and accessibility validation remain separate; see [Windows validation](docs/windows-validation.md). Review binary-distribution obligations in [THIRD_PARTY.md](THIRD_PARTY.md).
