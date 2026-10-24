@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+<title>Mellow PDF Reader — open book</title>
+<rect width="256" height="256" rx="58" fill="#345f59"/>
+<path d="M41 67C75 61 102 66 128 80C154 66 181 61 215 67V187C181 181 155 187 128 203C101 187 75 181 41 187Z" fill="#214b46"/>
+<path d="M46 59C77 55 104 61 128 76V195C104 180 77 175 46 179Z" fill="#fffaf0"/>
+<path d="M128 76C152 61 179 55 210 59V179C179 175 152 180 128 195Z" fill="#efdfbc"/>
+<path d="M128 78V193" stroke="#d6c8a9" stroke-width="4"/>
+<path d="M177 59V112L190 103L203 110V58C194 57 186 58 177 59Z" fill="#c79c60"/>
+<path d="M65 93C80 92 94 95 107 101M65 116C80 115 94 118 107 124M65 139C80 138 94 141 107 147" fill="none" stroke="#9da99a" stroke-width="5" stroke-linecap="round"/>
+</svg>
