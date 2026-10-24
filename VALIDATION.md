@@ -1,4 +1,26 @@
-# Validation — 0.0.4
+# Validation — 0.0.5
+
+## Page-preview update in 0.0.5
+
+The page-preview popup offers only **Small (three columns)** and **Large (two
+columns)**. Cell sizes adapt to the viewport width. A stable scrollbar gutter
+prevents reflow oscillation; a one-pixel width allowance avoids Qt wrapping the
+last cell when row widths fit exactly. Resize updates are coalesced and stopped
+when the popup closes. The arrangement workspace keeps its existing layout.
+
+The final affected-feature suite passed **63 tests in 17.63 seconds**: page-preview
+layout at 420/500/640 logical pixels, both sizes, selection/Current indication,
+resize and activation, scrollbar popup routing, source closure, PDF-tool page
+arrangement and supersampled thumbnail rendering. Tests retain the two-request
+and 8 MiB cache limits. Both layouts were captured from the actual Qt app and
+visually inspected; screenshots remain outside the repository.
+
+App, executable resource and installer versions agree on **0.0.5**. No Actions,
+release, native Windows build or new security scan was run for this UI update.
+The full 0.0.4 regression/security results below are historical evidence for the
+preceding source; they are not a new full-suite run for 0.0.5.
+
+## Previous 0.0.4 validation
 
 Checked on 25 October 2026: Linux x86_64, Python 3.12, PySide6/Qt 6.12, pypdf 6.21.2, offscreen Qt.
 

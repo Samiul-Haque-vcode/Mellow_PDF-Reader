@@ -97,7 +97,7 @@ def test_thumbnail_resize_jump_and_current_indicator_preserve_reader_until_open(
     assert d.page_number.value()==3 and 'Current' in d.grid.pages.index(2,0).data()
     old=max(image.width() for image in d.grid.cache.values())
     d.thumbnail_size.setCurrentText('Large');wait(app,30);thumbnails_ready(app,d.grid)
-    assert d.grid.gridSize()==QSize(216,282)
+    assert d.grid.gridSize().width()==(d.grid.viewport().width()-1)//2
     assert max(image.width() for image in d.grid.cache.values())>old
     assert len(d.grid.pending)<=2
     d.page_number.setValue(5);wait(app,20)

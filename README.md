@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">Mellow PDF Reader</h1>
 <p align="center"><strong>A softer way to read.</strong></p>
-<p align="center">Version 0.0.4 · Windows 10/11 x64 · Offline · PDF only</p>
+<p align="center">Version 0.0.5 · Windows 10/11 x64 · Offline · PDF only</p>
 
 Mellow is a compact desktop PDF reader for everyday reading, textbooks and comparing documents. Tabs and one slim toolbar leave most of the window for the page. Files stay in their original folders—there is no account, cloud service, telemetry or internal document library.
 
@@ -12,6 +12,7 @@ Mellow is a compact desktop PDF reader for everyday reading, textbooks and compa
 - **Real PDF rendering:** Qt PDF, powered by PDFium, with smooth scrolling, zoom, Fit Width, Fit Page, actual size and independent rotation.
 - **Four reading themes:** Light, Sepia, Dark and Black. Sepia changes the actual page and surrounding canvas to a continuous warm paper shade. Theme tuning and figure-color preservation are in **Settings → Appearance**. Color preservation is a pixel heuristic; grayscale images may be tinted.
 - **Tabs and split reading:** compare two PDFs or two independent views of one PDF, horizontally or vertically. Resize, swap books, choose proportions or temporarily maximize a pane. Swapping books preserves the divider ratio.
+- **Page preview:** Small shows three pages per row; Large shows two. Thumbnail cells adapt to the popup width while keeping sharp source-PDF rendering.
 - **Page layouts:** Continuous, Single Page, Two Pages and Two Pages Continuous, with an optional separate cover. Saved document preferences take priority over defaults for new PDFs.
 - **Navigation:** printed PDF page labels, custom numbering, Back/Forward history, page previews and nested outline chapter navigation. Temporary **Quick Jump** markers return to a saved spot and participate in Back/Forward history; markers disappear when the app closes.
 - **Search and selection:** search with next/previous results, text highlighting, ordinary text selection and copying. Select between two points by clicking the start, scrolling and clicking the end; then preserve line breaks or join paragraphs. Larger copies offer progress and cancellation.
@@ -85,7 +86,7 @@ The script creates its Python environment, runs tests, builds the executable wit
 - `dist/MellowPDFReader-Setup.exe` — installer.
 - `dist/build-verification/` — hashes, signature and available antivirus results.
 
-See [security and signing](SECURITY.md) and [Windows validation](docs/windows-validation.md). Unsigned builds may show Windows reputation warnings. Version 0.0.4 is a source publication; no newly compiled Windows executable or installer is included here.
+See [security and signing](SECURITY.md) and [Windows validation](docs/windows-validation.md). Unsigned builds may show Windows reputation warnings. Version 0.0.5 is a source publication; no newly compiled Windows executable or installer is included here.
 
 The GitHub workflow is **manual only**. Pushes and pull requests do not start it; artifact uploads are off by default. No release is published automatically.
 
@@ -107,7 +108,7 @@ docs/        Windows validation checklist
 
 Tests and developer dependencies are not part of the installed app. This repository omits showcase videos, screenshots, old roadmaps, historical release records, caches and compiled binaries. Source stays readable rather than minified.
 
-## Security in 0.0.4
+## Security
 
 PDF links are limited to ordinary HTTP/HTTPS and email URLs. Local-file and custom
 protocol handlers, URL credentials and email attachment parameters are blocked.

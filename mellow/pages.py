@@ -49,7 +49,8 @@ class PagesPanel(DismissibleDialog):
         controls.addWidget(self.page_number)
         controls.addWidget(QLabel(f'/ {self.document.pageCount()}'),1)
         self.thumbnail_size=QComboBox()
-        self.thumbnail_size.addItems(['Small','Medium','Large'])
+        self.thumbnail_size.addItem('Small',3)
+        self.thumbnail_size.addItem('Large',2)
         self.thumbnail_size.setAccessibleName('Thumbnail size')
         controls.addWidget(self.thumbnail_size)
         root.addLayout(controls)
@@ -66,6 +67,13 @@ class PagesPanel(DismissibleDialog):
         self.thumbnail_size.currentIndexChanged.connect(self.resize_thumbnails)
         self.grid.selectionModel().currentChanged.connect(self.selected_page)
         self.grid.installEventFilter(self)
+        self.grid.setSpacing(0)
+        self.grid.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+        self.layout_timer=QTimer(self)
+        self.layout_timer.setSingleShot(True)
+        self.layout_timer.timeout.connect(self.resize_thumbnails)
+        self.grid.viewport().installEventFilter(self)
+        self.resize_thumbnails()
 
     def browse_page(self,number):
         index=self.grid.pages.index(number-1,0)
@@ -78,9 +86,12 @@ class PagesPanel(DismissibleDialog):
             self.page_number.setValue(index.row()+1)
             self.page_number.blockSignals(False)
 
-    def resize_thumbnails(self,index):
+    def resize_thumbnails(self,index=None):
+        if self._finished:return
         row=self.grid.currentIndex().row()
-        self.grid.set_thumbnail_size([QSize(152,198),QSize(184,240),QSize(216,282)][index])
+        columns=self.thumbnail_size.currentData()
+        width=max(1,(self.grid.viewport().width()-1)//columns)
+        self.grid.set_thumbnail_size(QSize(width,max(64,round(width*1.3))))
         if row>=0:self.grid.scrollTo(self.grid.pages.index(row,0),self.grid.ScrollHint.PositionAtCenter)
 
     def document_status(self,status):
@@ -108,6 +119,8 @@ class PagesPanel(DismissibleDialog):
             self.grid.scrollTo(index,self.grid.ScrollHint.PositionAtCenter)
 
     def eventFilter(self,obj,event):
+        if not self._finished and event.type()==QEvent.Type.Resize and obj is self.grid.viewport():
+            self.layout_timer.start(0)
         if event.type()==QEvent.Type.ShortcutOverride and event.key()==Qt.Key.Key_Escape:
             if obj is self or isinstance(obj,QWidget) and self.isAncestorOf(obj):
                 event.accept()
@@ -122,6 +135,7 @@ class PagesPanel(DismissibleDialog):
         if self._finished:return
         self._finished=True
         self._filter_installed=False
+        self.layout_timer.stop()
         QApplication.instance().removeEventFilter(self)
         self.grid.release()
         if self.document is not None and isValid(self.document):
