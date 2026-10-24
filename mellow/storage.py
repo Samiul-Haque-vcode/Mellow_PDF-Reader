@@ -135,7 +135,9 @@ class Store:
                 self.db.execute('UPDATE settings SET value=? WHERE key=?',(json.dumps(rewritten),'session'))
         return new
     def export_favorites(self, path):
-        Path(path).write_text(json.dumps(self.locations('favorite'), indent=2), encoding='utf8')
+        from .backup import write_metadata
+        body=json.dumps(self.locations('favorite'),indent=2,ensure_ascii=False,allow_nan=False).encode('utf8')
+        write_metadata(self,path,body)
     def import_favorites(self, path):
         limit=32*1024*1024
         with Path(path).open('rb') as source:content=source.read(limit+1)

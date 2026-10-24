@@ -147,24 +147,34 @@ def snapshot(store):
 
 
 def write(store, path):
-    path = Path(path).resolve()
-    database = store.db.execute('PRAGMA database_list').fetchone()[2]
-    if database and path.is_relative_to(Path(database).resolve().parent):
-        raise ValueError('Save the backup outside Mellow’s data folder so uninstall will keep it.')
     body = json.dumps(dict(format=FORMAT, version=1,
         created_utc=datetime.now(timezone.utc).isoformat(), data=snapshot(store)),
         ensure_ascii=False, allow_nan=False, indent=2).encode('utf8')
-    if len(body) > LIMIT: raise ValueError('Backup is larger than the 32 MB metadata limit.')
-    temporary = None
+    write_metadata(store,path,body,outside_data_folder=True)
+
+
+def write_metadata(store,path,body,outside_data_folder=False):
+    """Atomic JSON exports, outside live metadata and never over a PDF."""
+    path=Path(path).resolve()
+    database=store.db.execute('PRAGMA database_list').fetchone()[2]
+    if database:
+        live=Path(database).resolve()
+        if path==live or (outside_data_folder and path.is_relative_to(live.parent)):
+            raise ValueError('Save the export outside Mellow’s live metadata location.')
+    if path.suffix.lower()!='.json':raise ValueError('Choose a JSON (.json) file for metadata exports.')
+    if path.is_file():
+        with path.open('rb') as source:header=source.read(1024)
+        if header.lstrip().startswith(b'%PDF-'):
+            raise ValueError('Choose a JSON destination, not an existing PDF document.')
+    if len(body)>LIMIT:raise ValueError('Export is larger than the 32 MB metadata limit.')
+    temporary=None
     try:
-        with tempfile.NamedTemporaryFile(dir=path.parent, prefix='.mellow-backup-', delete=False) as output:
-            temporary = Path(output.name)
-            output.write(body)
-            output.flush()
-            os.fsync(output.fileno())
-        os.replace(temporary, path)
+        with tempfile.NamedTemporaryFile(dir=path.parent,prefix='.mellow-backup-',delete=False) as output:
+            temporary=Path(output.name)
+            output.write(body);output.flush();os.fsync(output.fileno())
+        os.replace(temporary,path)
     finally:
-        if temporary is not None: temporary.unlink(missing_ok=True)
+        if temporary is not None:temporary.unlink(missing_ok=True)
 
 
 def read(path):

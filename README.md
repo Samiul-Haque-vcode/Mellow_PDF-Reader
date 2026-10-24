@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">Mellow PDF Reader</h1>
 <p align="center"><strong>A softer way to read.</strong></p>
-<p align="center">Version 0.0.3 · Windows 10/11 x64 · Offline · PDF only</p>
+<p align="center">Version 0.0.4 · Windows 10/11 x64 · Offline · PDF only</p>
 
 Mellow is a compact desktop PDF reader for everyday reading, textbooks and comparing documents. Tabs and one slim toolbar leave most of the window for the page. Files stay in their original folders—there is no account, cloud service, telemetry or internal document library.
 
@@ -85,7 +85,7 @@ The script creates its Python environment, runs tests, builds the executable wit
 - `dist/MellowPDFReader-Setup.exe` — installer.
 - `dist/build-verification/` — hashes, signature and available antivirus results.
 
-See [security and signing](SECURITY.md) and [Windows validation](docs/windows-validation.md). Unsigned builds may show Windows reputation warnings. Version 0.0.3 is a source publication; no newly compiled Windows executable or installer is included here.
+See [security and signing](SECURITY.md) and [Windows validation](docs/windows-validation.md). Unsigned builds may show Windows reputation warnings. Version 0.0.4 is a source publication; no newly compiled Windows executable or installer is included here.
 
 The GitHub workflow is **manual only**. Pushes and pull requests do not start it; artifact uploads are off by default. No release is published automatically.
 
@@ -107,13 +107,16 @@ docs/        Windows validation checklist
 
 Tests and developer dependencies are not part of the installed app. This repository omits showcase videos, screenshots, old roadmaps, historical release records, caches and compiled binaries. Source stays readable rather than minified.
 
-## Security in 0.0.3
+## Security in 0.0.4
 
 PDF links are limited to ordinary HTTP/HTTPS and email URLs. Local-file and custom
 protocol handlers, URL credentials and email attachment parameters are blocked.
 Favorites imports have a 32 MB limit and reject invalid pages, non-finite positions
 and malformed paths before changing saved data. PDF utilities require pypdf 6.21.2
 or newer to include fixes for three malformed-PDF denial-of-service advisories.
+Saved and imported reading positions are clamped before conversion to Qt scrollbar
+integers. Favorites and app backups use atomic JSON exports that reject live metadata
+and PDF destinations; interrupted writes preserve the previous file.
 See [the security review](SECURITY.md) for scan scope and remaining limitations.
 
 ## Scope and limitations

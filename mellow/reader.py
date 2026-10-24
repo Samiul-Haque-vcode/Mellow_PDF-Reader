@@ -264,8 +264,8 @@ class Reader(SelectionControls,QPdfView):
             for number,rect,scale in self.page_entries(page):
                 if number==page:
                     rotated=page_transform(self,page).map(location)
-                    self.horizontalScrollBar().setValue(round(rect.x()+rotated.x()*scale-point.x()))
-                    self.verticalScrollBar().setValue(round(rect.y()+rotated.y()*scale-point.y()))
+                    self._set_scroll_position(self.horizontalScrollBar(),rect.x()+rotated.x()*scale-point.x())
+                    self._set_scroll_position(self.verticalScrollBar(),rect.y()+rotated.y()*scale-point.y())
                     break
         self.locationChanged.emit()
     def resizeEvent(self,event):
@@ -764,14 +764,21 @@ class Reader(SelectionControls,QPdfView):
         if defer: QTimer.singleShot(0,apply)
         else: apply()
 
+    @staticmethod
+    def _set_scroll_position(bar,value):
+        # Clamp in Python before converting to Qt's signed 32-bit scrollbar int.
+        # Comparisons also safely bound arbitrarily large ints and infinities.
+        if type(value) not in (int,float) or value!=value:value=bar.minimum()
+        bar.setValue(round(max(bar.minimum(),min(bar.maximum(),value))))
+
     def _position_state(self,state):
         self._positioning=True
         try:
             if self.custom_rendering: self.rotated_pages.sync()
             if (state.get('viewport')==[self.viewport().width(),self.viewport().height()] and
                     state.get('dpi',self.logicalDpiX())==self.logicalDpiX() and state.get('dpr',self.devicePixelRatioF())==self.devicePixelRatioF()):
-                self.horizontalScrollBar().setValue(state.get('horizontal',0))
-                self.verticalScrollBar().setValue(state.get('vertical',0))
+                self._set_scroll_position(self.horizontalScrollBar(),state.get('horizontal',0))
+                self._set_scroll_position(self.verticalScrollBar(),state.get('vertical',0))
             else:
                 anchor=state.get('anchor_page',state.get('page',0))
                 for page,rect,scale in self.page_entries(anchor):
@@ -779,8 +786,8 @@ class Reader(SelectionControls,QPdfView):
                         point=page_transform(self,page).map(QPointF(state.get('x',0),state.get('y',0)))
                         if state.get('viewport') is None and any(self.crop):
                             point=QPointF(max(0,min(rect.width()/scale,point.x())),max(0,min(rect.height()/scale,point.y())))
-                        self.horizontalScrollBar().setValue(round(rect.x()+point.x()*scale))
-                        self.verticalScrollBar().setValue(round(rect.y()+point.y()*scale))
+                        self._set_scroll_position(self.horizontalScrollBar(),rect.x()+point.x()*scale)
+                        self._set_scroll_position(self.verticalScrollBar(),rect.y()+point.y()*scale)
                         break
         finally:self._positioning=False
 
@@ -797,8 +804,8 @@ class Reader(SelectionControls,QPdfView):
         for number,rect,scale in self.page_entries(page):
             if number==page:
                 point=page_transform(self,page).map(QPointF(state.get('x',0),state.get('y',0)))
-                self.horizontalScrollBar().setValue(round(rect.x()+point.x()*scale))
-                self.verticalScrollBar().setValue(round(rect.y()+point.y()*scale))
+                self._set_scroll_position(self.horizontalScrollBar(),rect.x()+point.x()*scale)
+                self._set_scroll_position(self.verticalScrollBar(),rect.y()+point.y()*scale)
                 break
         self.locationChanged.emit()
 
@@ -852,9 +859,9 @@ class Reader(SelectionControls,QPdfView):
                     point=page_transform(self,page).map(location) if not location.isNull() else QPointF()
                     if any(self.crop):
                         point=QPointF(max(0,min(rect.width()/scale,point.x())),max(0,min(rect.height()/scale,point.y())))
-                    self.verticalScrollBar().setValue(round(rect.top()+point.y()*scale))
+                    self._set_scroll_position(self.verticalScrollBar(),rect.top()+point.y()*scale)
                     if location.x()>0 or self.custom_rendering:
-                        self.horizontalScrollBar().setValue(round(rect.left()+point.x()*scale))
+                        self._set_scroll_position(self.horizontalScrollBar(),rect.left()+point.x()*scale)
                     break
         finally:self._positioning=False
         self.locationChanged.emit()
@@ -955,8 +962,8 @@ class Reader(SelectionControls,QPdfView):
             for index,rect,scale in self.page_entries(page):
                 if index==page:
                     rotated=page_transform(self,page).map(location)
-                    self.horizontalScrollBar().setValue(round(rect.x()+rotated.x()*scale-point.x()))
-                    self.verticalScrollBar().setValue(round(rect.y()+rotated.y()*scale-point.y()))
+                    self._set_scroll_position(self.horizontalScrollBar(),rect.x()+rotated.x()*scale-point.x())
+                    self._set_scroll_position(self.verticalScrollBar(),rect.y()+rotated.y()*scale-point.y())
                     break
             self.locationChanged.emit()
         position()

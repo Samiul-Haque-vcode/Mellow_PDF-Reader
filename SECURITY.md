@@ -63,7 +63,7 @@ not complete dependency attribution or physical Windows validation; see
 [distribution notes](THIRD_PARTY.md) and [Windows validation](docs/windows-validation.md).
 
 
-## Source review: 0.0.3 — 25 October 2026
+## Source review: 0.0.4 — 25 October 2026
 
 Fixed application issues:
 
@@ -81,7 +81,7 @@ Fixed application issues:
   working directory or PATH for explorer.exe. API lookup failures stop the action.
   Native Windows execution still needs its own platform validation.
 
-Dependency audit found three pypdf 6.21.1 denial-of-service advisories:
+The 0.0.3 dependency audit found three pypdf 6.21.1 denial-of-service advisories:
 CVE-2026-115572, CVE-2026-115585 and CVE-2026-115580. The minimum supported version
 and tested lock now use **pypdf 6.21.2**, which the advisories list as fixed.
 A repeat pip-audit check of the installed eight runtime packages reported **zero
@@ -104,5 +104,33 @@ No user PDF data was sent to the advisory service.
 
 These checks do not certify that arbitrary PDFs are safe. Native parser bugs,
 resource exhaustion and future advisories remain possible. No new Windows Defender
-scan, executable build, certificate signature or release is claimed for 0.0.3.
+scan, executable build, certificate signature or release is claimed for 0.0.4.
 Functional test evidence is in [VALIDATION.md](VALIDATION.md).
+
+
+### Additional fixes in 0.0.4
+
+Seven new regression cases reproduced failures before the fixes: very large finite
+PDF source positions overflowed signed 32-bit scrollbar conversions, metadata
+exports could overwrite PDF destinations, Favorites export was not atomic, and
+export could target the live database. The final suite adds range/non-finite and
+disguised-PDF cases as well.
+
+All reader-controlled scrollbar positioning now clamps in Python to the current
+bar limits before converting to Qt integers. The helper safely handles large
+integers, infinities and NaN; saved locations and PDF destinations can no longer
+raise the reproduced conversion overflow in these paths. This does not establish
+native parser safety or sandboxing.
+
+Favorites and app backups share an atomic JSON writer with file flush/fsync,
+replacement and temporary-file cleanup. Exports require a .json destination,
+refuse the live database, and reject an existing file whose leading header
+identifies a PDF, even if it is named .json. App backups also retain the rule to
+save outside the metadata directory. These checks prevent the reproduced data-loss
+cases; they are not a general file-type detector or protection from an attacker
+who can concurrently modify the local filesystem.
+
+The point-in-time 0.0.4 pip-audit recheck again found zero known advisories across
+eight runtime packages with none skipped. Bandit again reported 5 medium and 91
+low findings, with no parse errors. SQL identifiers remain constant/whitelisted
+and record values remain parameterized. No automatic Actions or release is used.
