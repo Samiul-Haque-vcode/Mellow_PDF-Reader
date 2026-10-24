@@ -31,3 +31,28 @@ def test_failed_lens_render_waits_for_new_input_then_recovers(app,pdf,tmp_path):
         aids.pointer=None;aids.refresh();aids.pointer=point;aids.refresh()
         assert aids.overlay.image is image and not aids.timer.isActive()
     finally:w.close()
+
+
+def test_return_to_previous_region_while_another_render_is_pending(app,pdf,tmp_path):
+    from PySide6.QtCore import Qt
+    w=Window(Store(tmp_path/'race.db'),restore=False);w.resize(760,700);w.show()
+    r=w.open_pdf(pdf);wait(app,40)
+    try:
+        aids=r.aids;aids.set_lens_enabled(True)
+        first=r.point_in_view(0,QPointF(80,140)).toPoint()
+        second=r.point_in_view(0,QPointF(180,240)).toPoint()
+        aids.pointer=first;aids.refresh();aids.timer.stop();a=aids.desired
+        image=QImage(40,40,QImage.Format.Format_RGB32);image.fill(Qt.GlobalColor.red)
+        aids.pending=(123,a);aids.rendered(0,QSize(),image,None,123)
+        assert aids.last_render==a and aids.overlay.image is not None
+        aids.pointer=second;aids.refresh();aids.timer.stop();b=aids.desired
+        assert a!=b and aids.overlay.image is None
+        aids.pending=(124,b)
+        aids.pointer=first;aids.refresh();aids.timer.stop()
+        aids.rendered(0,QSize(),image,None,124)
+        assert aids.desired==a and aids.timer.isActive()
+        for _ in range(100):
+            wait(app,10)
+            if aids.overlay.image is not None:break
+        assert aids.overlay.image is not None and aids.last_render==a
+    finally:w.close()

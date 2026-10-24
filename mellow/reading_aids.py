@@ -4,7 +4,7 @@ from PySide6.QtCore import QObject,Signal,QTimer,Qt,QEvent,QPoint,QPointF,QRect,
 from PySide6.QtGui import QPainter,QColor,QImage,QTransform,QPen,QCursor
 from PySide6.QtPdf import QPdfBookmarkModel,QPdfPageRenderer,QPdfDocumentRenderOptions
 from PySide6.QtWidgets import QWidget
-from shiboken6 import delete,isValid
+from shiboken6 import delete
 from .theme import recolor,canvas_color,normalize_theme
 from .style import PALETTES
 from .geometry import source_rect
@@ -165,6 +165,7 @@ class ReadingAids(QObject):
         if descriptor!=self.desired:
             self.desired=descriptor
             if descriptor!=self.last_render:
+                self.last_render=None
                 self.overlay.image=None;self.overlay.message='Loading…';self.overlay.update()
         if descriptor!=self.last_render and not self.timer.isActive():self.timer.start()
 

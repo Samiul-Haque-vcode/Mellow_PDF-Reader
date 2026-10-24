@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">Mellow PDF Reader</h1>
 <p align="center"><strong>A softer way to read.</strong></p>
-<p align="center">Version 0.0.1 · Windows 10/11 x64 · Offline · PDF only</p>
+<p align="center">Version 0.0.2 · Windows 10/11 x64 · Offline · PDF only</p>
 
 Mellow is a compact desktop PDF reader for everyday reading, textbooks and comparing documents. Tabs and one slim toolbar leave most of the window for the page. Files stay in their original folders—there is no account, cloud service, telemetry or internal document library.
 
@@ -85,7 +85,7 @@ The script creates its Python environment, runs tests, builds the executable wit
 - `dist/MellowPDFReader-Setup.exe` — installer.
 - `dist/build-verification/` — hashes, signature and available antivirus results.
 
-See [security and signing](SECURITY.md) and [Windows validation](docs/windows-validation.md). Unsigned builds may show Windows reputation warnings. Version 0.0.1 is a source publication; no newly compiled Windows executable or installer is included here.
+See [security and signing](SECURITY.md) and [Windows validation](docs/windows-validation.md). Unsigned builds may show Windows reputation warnings. Version 0.0.2 is a source publication; no newly compiled Windows executable or installer is included here.
 
 The GitHub workflow is **manual only**. Pushes and pull requests do not start it; artifact uploads are off by default. No release is published automatically.
 

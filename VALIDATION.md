@@ -1,33 +1,29 @@
-# Validation — 0.0.1
+# Validation — 0.0.2
 
-Checked on 25 October 2026 using Linux x86_64, Python 3.12 and PySide6/Qt 6.12 with Qt's offscreen platform.
+Checked on 25 October 2026: Linux x86_64, Python 3.12, PySide6/Qt 6.12, offscreen Qt platform.
 
 ## Results
 
-- Full regression suite: **625 passed, 1 Windows-only skip, 1 existing Qt enum deprecation warning in 354.33 seconds**.
-- After the final magnifier cache correction: **13 affected-feature tests passed in 3.64 seconds**. This group overlaps the full suite; it is not 13 additional unique tests.
-- Source smoke exited successfully, exercising actual PDF rendering, PDF-tool previews and metadata backup restoration.
-- Application, Windows version resource and installer version are all **0.0.1**.
+- Full suite: **618 passed, 1 Windows-only skip, 1 existing Qt enum deprecation warning in 353.06 seconds**.
+- Focused magnifier/reading-aid preflight: **14 passed in 3.83 seconds**, included in the full suite rather than additional unique tests.
+- Source smoke exited zero: actual PDF rendering, tool previews and metadata backup restoration.
+- App, Windows version resource and installer version agree on **0.0.2**.
+- No native Windows build, installer verification, new antivirus scan or release was performed for this source update. Workflow remains manual-only; push uses `[skip ci]`.
 
-The full suite preceded the final cache-reentry correction; the subsequent affected-feature run exercises the final magnifier implementation. No new native Windows build, installer or antivirus scan was run for this source publication. The GitHub workflow is manual-only and the source push uses `[skip ci]`.
+## Debugging
 
-## Debug fixes included
+Rapidly pointing at region A, moving to B and returning to A while B was still rendering could leave the magnifier blank. Clearing the displayed image now invalidates its render descriptor too. A stale completion schedules the requested region correctly. A real-PDF regression simulates this sequence and confirms recovery; failure/retry and leave/reentry tests also remain.
 
-- Quick Jump return records the departure in Back/Forward history. Both keyboard and context-menu routes preserve the marker and maintain independent pane histories.
-- Swapping books preserves arbitrary divider ratios and presets in horizontal/vertical splits, while retaining reading positions and keeping temporarily maximized panes usable.
-- Failed magnifier-region renders show an unavailable message and wait for a different region or changed input rather than continuously retrying at zero delay. Changing the region allows recovery.
-- Leaving and returning to the same magnifier source region preserves its cached image or failure state, avoiding a blank Loading display.
+The earlier Quick Jump Back/Forward, fixed split proportions, magnifier failure-loop and cache-reentry fixes remain covered. Tests exercise generated real PDFs, text selection/copying, search, outlines, links, diagrams, rotations/crops, split views, sessions, saved places and utilities. Source PDFs remain unchanged.
 
-Tests use real generated PDFs: text, outlines, native links, images, diagrams, varied page dimensions, rotations, crop, split views, selections, copying, previews, sessions and utilities. Source PDFs remain unchanged.
+## Excess removed
 
-## Repository cleanup
+Removed the unused automatic-release publishing helper and its eight publishing-only tests, plus the unused icon-generation utility. No reader or PDF utility feature was removed. Runtime branding assets, installer/build verification, signing support, notice collection and application regressions remain. The suite count changes from 625 to 618 passing tests: eight retired publishing tests and one new magnifier race regression.
 
-The previous tracked tree was 7,402,704 bytes across 134 files. The initial cleaned tree was 1,024,860 bytes across 115 files, before this validation note and final small fixes—approximately **86% less source payload**, before Git/ZIP compression. This is a repository-size comparison, not an installed-app memory or executable-size measurement.
-
-Removed showcase videos/images, narration files, old queue and test-history documents, historical release documents and optional benchmark scripts. Kept the working app, branding, regression tests, dependency declarations, installer/build tools, security guidance and license notices. No caches, sample PDFs, user metadata or compiled binaries are committed. Code remains readable rather than minified.
+Source remains readable. No videos, demo screenshots, compiled binaries, caches, user metadata or sample PDFs are committed.
 
 ## Limits
 
-Search and copying require extractable text; no OCR is included. Complex text ordering, unlinked reference detection and image-color preservation remain heuristic. Text extraction and some native operations cannot be interrupted mid-call. Reading themes are preferences rather than medical guarantees.
+Search/copying require an extractable text layer; no OCR is included. Complex text ordering, reference matching and image-color preservation are heuristic. Native text extraction and some PDF operations cannot be interrupted mid-call. Themes are comfort preferences, not medical claims.
 
-Physical Windows touchpad, mixed-DPI, GPU/fullscreen timing, Snap and accessibility testing remain separate; see [the checklist](docs/windows-validation.md). Source publication does not certify those results. No certificate-signed executable is supplied. Review the exact Qt/PDFium attribution bundle and other dependency obligations before distributing binaries; see [THIRD_PARTY.md](THIRD_PARTY.md).
+Physical touchpad, mixed-DPI, GPU/fullscreen, Snap and accessibility testing remain separate; see [Windows validation](docs/windows-validation.md). No signed executable is supplied. Review the exact Qt/PDFium attribution bundle and other binary-distribution obligations in [THIRD_PARTY.md](THIRD_PARTY.md).
