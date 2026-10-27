@@ -4,26 +4,51 @@
 
 <h1 align="center">Mellow PDF Reader</h1>
 <p align="center"><strong>A softer way to read.</strong></p>
-<p align="center">Version 0.0.5 · Windows 10/11 x64 · PDF only · Local-first</p>
+<p align="center">
+  Windows 10/11 (x64) · PDF only · Offline reading · Source version 0.0.5
+</p>
 
-Mellow is a compact desktop PDF reader designed for comfortable reading, studying, and comparing documents. It keeps the page central, with tabs and a slim toolbar instead of permanent side panels. Your PDFs remain in their original folders; no account or cloud service is required.
+<p align="center">
+  <a href="#features">Features</a> ·
+  <a href="#getting-started">Getting started</a> ·
+  <a href="#documentation">Documentation</a> ·
+  <a href="#project-status-and-limitations">Project status</a>
+</p>
 
-> **Distribution status:** This repository publishes **0.0.5 source code**. It does not provide a newly compiled 0.0.5 installer or executable. Windows build and release verification are described below.
+**Mellow** is a lightweight, reading-first PDF application for Windows. It is made for textbooks, long documents, and reading two PDFs side by side—without crowding the page with permanent tool panels.
 
-## Highlights
+Your PDFs remain in their original folders. Mellow does not require an account, sync service, or internet connection for ordinary reading.
 
-- **Comfortable reading:** Light, Sepia, Dark, and Black appearances; Fit Width/Fit Page, zoom, rotation, customizable page layouts, and optional fullscreen controls.
-- **Tabs and split view:** Read one PDF at a time, compare two documents, or open independent views of the same PDF in a resizable horizontal or vertical split.
-- **Study tools:** Document outlines, PDF-specific bookmarks, global Favorites, reading ruler, Quick Jump, search, text selection, magnifier, auto-scroll, and local reference previews.
-- **Pick up where you left off:** Restore tabs, positions, zoom, and split configuration; import/export Favorites and app metadata backups.
-- **Small PDF utilities:** Extract pages, merge PDFs, and make a PDF from images, with previews before saving.
-- **Offline reading:** No telemetry or account; dependency installation and some build-time steps may use the network.
+## Features
 
-[Explore the user guide](docs/user-guide.md) · [Project documentation](docs/README.md) · [Report a bug](../../issues/new/choose)
+### Read comfortably
 
-## Run from source
+- **Uncluttered workspace** — document tabs, a compact toolbar, optional fullscreen, and no permanently open sidebar.
+- **Reading appearances** — Light, Sepia, Dark, and Black themes, with page-color tuning and optional figure-color preservation.
+- **Flexible page views** — Fit Width, Fit Page, zoom, rotation, continuous or single-page layouts, and two-page spreads with an optional separate cover.
+- **Side-by-side reading** — open two PDFs or two independent views of one PDF; choose horizontal or vertical split, resize the divider, or temporarily focus on one pane.
 
-Requires **Python 3.12 x64** on Windows. From the repository root in PowerShell:
+### Find information and keep your place
+
+- **Navigation** — PDF outline, printed page labels, customizable numbering, Back/Forward history, and adaptive page previews.
+- **Study aids** — reading ruler, magnifier, margin trimming, zoom lock, gentle auto-scroll, and local reference previews.
+- **Search and copy** — find text, select across a scrolling document, and choose whether copied text preserves line breaks.
+- **Saved locations** — document-specific bookmarks, global Favorites pointing to original files and pages, and temporary Quick Jump markers.
+- **Session restore** — reopen tabs with saved reading positions, zoom, and split arrangement.
+
+### Work with PDF files
+
+Mellow includes three small utilities with output previews: **Extract Pages**, **Merge PDFs**, and **Images to PDF**. The original input files remain unchanged by default.
+
+For details about each feature and the default keyboard shortcuts, see the [user guide](docs/user-guide.md).
+
+## Getting started
+
+> **Availability:** Version **0.0.5** is published here as **source code**. This repository does not include a newly compiled, verified 0.0.5 Windows installer or executable. Do not treat the source archive as an installable Windows app.
+
+### Run from source
+
+Install **Python 3.12 (64-bit)** on Windows, then open PowerShell in the repository folder:
 
 ```powershell
 py -3.12 -m venv .venv
@@ -31,30 +56,34 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe run_mellow.py
 ```
 
-Dependencies are downloaded during setup; ordinary PDF reading works offline. A source checkout is not a prebuilt app.
+After Mellow opens, press **Ctrl+O** to choose a PDF. Open additional PDFs as tabs; use the split-view controls when you want to compare pages. Adjust reading colors and shortcuts in **Settings**.
 
-To build an installer, install **Inno Setup 6** and follow the [Windows packaging guide](docs/distribution.md). Unverified or unsigned installers can trigger Windows reputation warnings; see [SECURITY.md](SECURITY.md).
+Setup downloads dependencies, but normal reading runs locally and offline.
+
+### Build for Windows
+
+For a Windows installer, install **Inno Setup 6** and follow the [distribution guide](docs/distribution.md). It covers the build script, portable mode, verification outputs, and release-readiness checks. Unsigned development builds may prompt Windows reputation warnings; read the [security guidance](SECURITY.md).
 
 ## Documentation
 
-| I want to… | Go to |
+| Audience | Guides |
 | --- | --- |
-| Learn the reading features and keyboard shortcuts | [User guide](docs/user-guide.md) |
-| Understand the folders and application components | [Architecture](docs/architecture.md) |
-| Set up development, tests, or the Windows workflow | [Development guide](docs/development.md) |
-| Package or check a Windows build | [Distribution guide](docs/distribution.md) |
-| See outstanding work before a public binary release | [Roadmap](docs/roadmap.md) |
-| Check what has changed | [Changelog](CHANGELOG.md) |
-| Review test evidence and current limitations | [VALIDATION.md](VALIDATION.md) |
-| Report or investigate security concerns | [SECURITY.md](SECURITY.md) |
-| Contribute code or documentation | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| **Readers** | [User guide](docs/user-guide.md) · [Keyboard shortcuts](docs/user-guide.md#default-keyboard-shortcuts) |
+| **Developers** | [Architecture](docs/architecture.md) · [Development and tests](docs/development.md) · [Contributing](CONTRIBUTING.md) |
+| **Release maintainers** | [Windows packaging](docs/distribution.md) · [Windows validation checklist](docs/windows-validation.md) |
+| **Project tracking** | [Roadmap](docs/roadmap.md) · [Changelog](CHANGELOG.md) |
+| **Reviews and compliance** | [Validation record](VALIDATION.md) · [Security](SECURITY.md) · [Third-party licenses](THIRD_PARTY.md) |
 
-## Scope and limitations
+Browse the complete [documentation index](docs/README.md). Bugs and feature suggestions can be filed through [GitHub Issues](../../issues/new/choose).
 
-Mellow is **PDF-only**. It does not offer OCR, PDF editing/annotation authoring, AI features, cloud syncing, or PDF-to-Markdown conversion. Searching and copying from an image-only PDF require a text layer that Mellow does not generate. Complex multi-column documents and unlinked references may produce imperfect text order or navigation.
+## Project status and limitations
+
+Mellow is a **PDF reader**, not a full PDF editor. It does **not** provide OCR, annotation editing, cloud synchronization, AI features, EPUB/Markdown reading, or PDF-to-Markdown conversion. Search and text copying need an extractable text layer; complex document layouts can affect text order and reference matching.
+
+The Windows build workflow runs **manually**, not on every push. Source tests and historical verification are documented in [VALIDATION.md](VALIDATION.md); these do not establish that a downloadable Windows installer has been built, signed, or tested on physical Windows devices. Third-party Qt/PDFium attribution review is also outstanding before binary redistribution.
 
 ## License and credits
 
-Mellow's own code is [MIT licensed](LICENSE). Bundled dependencies retain their own licenses; review [THIRD_PARTY.md](THIRD_PARTY.md) before redistributing binaries. Version-specific Qt/PDFium attribution review remains outstanding.
+Mellow's own source code is licensed under the [MIT License](LICENSE). Dependencies have separate licensing and distribution requirements; see [THIRD_PARTY.md](THIRD_PARTY.md).
 
-Project by [Samiul-Haque-vcode](https://github.com/Samiul-Haque-vcode). Design, coding, and testing used ChatGPT (OpenAI); Mellow is an independent project.
+Created by [Samiul-Haque-vcode](https://github.com/Samiul-Haque-vcode), with ChatGPT (OpenAI) used to assist design, implementation, and testing. Mellow is an independent project.
