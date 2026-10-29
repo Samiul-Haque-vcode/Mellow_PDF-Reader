@@ -68,9 +68,9 @@ def prepare():
     if head!=commit:raise ValueError('The checkout does not match the release build commit.')
     dist=ROOT/'dist';out=dist/'release';out.mkdir(exist_ok=True)
     verification=dist/'build-verification'
-    build=json.loads((verification/'BUILD.json').read_text())
-    security=json.loads((verification/'SECURITY.json').read_text())
-    attribution=json.loads((dist/'MellowPDFReader/licenses/DEPENDENCIES.json').read_text())
+    build=json.loads((verification/'BUILD.json').read_text(encoding='utf8'))
+    security=json.loads((verification/'SECURITY.json').read_text(encoding='utf8'))
+    attribution=json.loads((dist/'MellowPDFReader/licenses/DEPENDENCIES.json').read_text(encoding='utf8'))
     if build['commit']!=commit or security['defender']['status']!='NoThreatsReported' or not attribution['complete_attribution_review']:
         raise ValueError('Release verification or attribution is incomplete.')
     if security.get('changed_or_missing_files') or security.get('signature_error'):raise ValueError('Release verification has unresolved errors.')
@@ -79,7 +79,7 @@ def prepare():
         if not path.resolve().is_relative_to(dist.resolve()) or not path.is_file() or digest(path)!=row['sha256']:
             raise ValueError('Checked build changed before publication.')
     totals=test_totals(ROOT/'test-results.xml')
-    archives=json.loads((ROOT/'packaging/notices/SOURCE-ARCHIVES.json').read_text())['archives']
+    archives=json.loads((ROOT/'packaging/notices/SOURCE-ARCHIVES.json').read_text(encoding='utf8'))['archives']
     source_paths=[download_source(row,out) for row in archives]
     source=out/'MellowPDFReader-1.0.0-Source.zip'
     subprocess.run(['git','archive','--format=zip','--prefix=MellowPDFReader-1.0.0/','--output='+str(source),'HEAD'],cwd=ROOT,check=True,timeout=60)
@@ -94,15 +94,15 @@ def prepare():
     for name in ('BUILD.json','SHA256SUMS.txt'):shutil.copy2(verification/name,evidence/name)
     # Publish useful results rather than builder-specific absolute paths/logs.
     for row in security['signatures']:row['Path']=Path(row['Path']).name
-    (evidence/'SECURITY.json').write_text(json.dumps(security,indent=2)+'\n')
-    (evidence/'TESTS.json').write_text(json.dumps(dict(commit=commit,**totals),indent=2)+'\n')
+    (evidence/'SECURITY.json').write_text(json.dumps(security,indent=2)+'\n',encoding='utf8')
+    (evidence/'TESTS.json').write_text(json.dumps(dict(commit=commit,**totals),indent=2)+'\n',encoding='utf8')
     evidence_zip=out/'MellowPDFReader-1.0.0-Verification.zip';zip_folder(evidence,evidence_zip)
     paths=source_paths+[source,evidence_zip,installer,portable_zip]
     entries=[dict(name=p.name,bytes=p.stat().st_size,sha256=digest(p)) for p in paths]
     checksums=out/'SHA256SUMS.txt';checksums.write_text(''.join(f"{r['sha256']}  {r['name']}\n" for r in entries),encoding='utf8')
     entries.append(dict(name=checksums.name,bytes=checksums.stat().st_size,sha256=digest(checksums)))
-    (out/'assets.json').write_text(json.dumps(dict(commit=commit,files=entries),indent=2)+'\n')
-    notes=(ROOT/'docs/releases/1.0.0.md').read_text().replace('{{BUILD_COMMIT}}',commit).replace('{{PASSED_TESTS}}',str(totals['tests']-totals['skipped']))
+    (out/'assets.json').write_text(json.dumps(dict(commit=commit,files=entries),indent=2)+'\n',encoding='utf8')
+    notes=(ROOT/'docs/releases/1.0.0.md').read_text(encoding='utf8').replace('{{BUILD_COMMIT}}',commit).replace('{{PASSED_TESTS}}',str(totals['tests']-totals['skipped']))
     (out/'release-notes.md').write_text(notes,encoding='utf8')
     print('Prepared',len(entries),'verified release assets; tests:',totals)
 
@@ -110,7 +110,7 @@ def prepare():
 def publish():
     if os.environ.get('GITHUB_REF')!='refs/heads/main' or os.environ.get('GITHUB_REPOSITORY')!=REPOSITORY:
         raise ValueError('Publication is restricted to the intended repository main branch.')
-    out=ROOT/'dist/release';data=json.loads((out/'assets.json').read_text())
+    out=ROOT/'dist/release';data=json.loads((out/'assets.json').read_text(encoding='utf8'))
     if data['commit']!=os.environ.get('GITHUB_SHA'):raise ValueError('Release commit changed.')
     assets=[]
     for row in data['files']:

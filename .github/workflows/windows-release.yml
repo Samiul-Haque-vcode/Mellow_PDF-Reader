@@ -8,7 +8,7 @@ permissions:
   contents: read
 concurrency:
   group: mellow-windows-release-1.0.0
-  cancel-in-progress: false
+  cancel-in-progress: ${{ contains(github.event.head_commit.message, '[replace preflight]') }}
 jobs:
   build-and-publish:
     if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[windows release 1.0.0]'))

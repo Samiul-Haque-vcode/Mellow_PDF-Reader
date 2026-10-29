@@ -51,3 +51,37 @@ def test_publication_rejects_other_repository_or_branch(monkeypatch):
     with pytest.raises(ValueError,match='restricted'):assets.publish()
     monkeypatch.setenv('GITHUB_REPOSITORY',assets.REPOSITORY);monkeypatch.setenv('GITHUB_REF','refs/heads/other')
     with pytest.raises(ValueError,match='restricted'):assets.publish()
+
+
+def test_preparation_handles_unicode_under_non_utf8_system_locale(tmp_path):
+    import json,os,shutil,subprocess,sys
+    root=tmp_path/'release';root.mkdir()
+    (root/'README.md').write_text('Mellow test fixture',encoding='utf8')
+    notes=root/'docs/releases/1.0.0.md';notes.parent.mkdir(parents=True)
+    notes.write_text('A softer way to read. “Mellow” — {{BUILD_COMMIT}} / {{PASSED_TESTS}}',encoding='utf8')
+    sources=root/'packaging/notices/SOURCE-ARCHIVES.json';sources.parent.mkdir(parents=True)
+    sources.write_text('{"archives":[]}',encoding='utf8')
+    def git(*args):return subprocess.check_output(['git','-C',str(root),*args],text=True).strip()
+    git('init','-b','main');git('add','README.md','docs','packaging')
+    git('-c','user.name=Fixture','-c','user.email=fixture@example.invalid','commit','-m','Release fixture')
+    commit=git('rev-parse','HEAD')
+    dist=root/'dist';app=dist/'MellowPDFReader';(app/'licenses').mkdir(parents=True)
+    (app/'MellowPDFReader.exe').write_bytes(b'app fixture')
+    (app/'licenses/DEPENDENCIES.json').write_text('{"complete_attribution_review":true}',encoding='utf8')
+    installer=dist/'MellowPDFReader-Setup.exe';installer.write_bytes(b'installer fixture')
+    portable=dist/'MellowPDFReader-Portable';shutil.copytree(app,portable)
+    (portable/'portable.ini').write_text('portable fixture',encoding='utf8')
+    verification=dist/'build-verification';verification.mkdir()
+    files=[dict(path=p.relative_to(dist).as_posix(),sha256=assets.digest(p)) for p in [*app.rglob('*'),installer] if p.is_file()]
+    (verification/'BUILD.json').write_text(json.dumps(dict(commit=commit,files=files)),encoding='utf8')
+    (verification/'SECURITY.json').write_text(json.dumps(dict(defender=dict(status='NoThreatsReported'),signatures=[dict(Path='app.exe',Status='NotSigned')])),encoding='utf8')
+    (verification/'SHA256SUMS.txt').write_text('fixture',encoding='utf8')
+    (root/'test-results.xml').write_text('<testsuites><testsuite tests="1"/></testsuites>',encoding='utf8')
+    module=str(Path(assets.__file__).resolve())
+    code=f'import importlib.util;from pathlib import Path;s=importlib.util.spec_from_file_location("assets",{module!r});m=importlib.util.module_from_spec(s);s.loader.exec_module(m);m.ROOT=Path({str(root)!r});m.prepare()'
+    env=os.environ.copy();env.update(GITHUB_SHA=commit,PYTHONUTF8='0',PYTHONCOERCECLOCALE='0',LC_ALL='C')
+    result=subprocess.run([sys.executable,'-c',code],env=env,capture_output=True,text=True,timeout=30)
+    assert result.returncode==0,result.stderr
+    assert '“Mellow”' in (dist/'release/release-notes.md').read_text(encoding='utf8')
+    manifest=json.loads((dist/'release/assets.json').read_text(encoding='utf8'))
+    assert len(manifest['files'])==5 and all((dist/'release'/r['name']).is_file() for r in manifest['files'])
