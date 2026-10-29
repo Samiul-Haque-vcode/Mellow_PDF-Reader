@@ -67,6 +67,6 @@ Windows build. GitHub's automatic tag archives refer to the earlier source-only
 commit. BUILD.json identifies the actual binary build commit; the current main
 branch also contains later publishing-script fixes and documentation updates.
 
-The [validation record](../VALIDATION.md) distinguishes the 723-test build,
-publishing-script follow-up, signatures and physical-device limits. Consult the
+The [validation record](../VALIDATION.md) records each build and its test results,
+signatures, scan evidence and physical-device limits. Consult the
 [release checklist](release-checklist.md) before another distribution.

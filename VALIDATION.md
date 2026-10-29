@@ -113,3 +113,33 @@ wrapper read the real GitHub response successfully. All **10 published assets**,
 source archive sizes/hashes, the original tag, **723-test** build evidence and
 Defender/signature results verified. This job only read existing release data;
 it uploaded **zero Actions artifacts** and did not rebuild or replace downloads.
+
+## Approved logo refresh — 30 October 2026
+
+Build commit: `3304dd8cec3017c3f2d984d401e89cbc8388c360`.
+[Windows release run](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/actions/runs/40944355399)
+completed successfully, including publication and read-only public-download verification.
+
+- **734 passed, 1 warning in 755.88 seconds** on Windows Python 3.14.10;
+  no skipped tests. The warning remains the Qt caption enum deprecation.
+- The approved teal/cream open-book artwork replaces the earlier logo in the
+  application, Windows icon, installer and README. The PNG has transparent corners;
+  the ICO includes 16, 20, 24, 32, 40, 48, 64, 128 and 256-pixel sizes.
+- Native GUI checks, frozen PDF/tools rendering, installer registration,
+  install/update/uninstall behavior and portable rendering passed.
+- Attribution gate matched all **132 native files**. Dependency versions and their
+  corresponding source archives are unchanged by this branding update.
+- Defender: **NoThreatsReported** for app and installer. Both are **NotSigned**.
+- All **10 release assets** and corresponding source hashes verified. The existing
+  v1.0.0 release downloads were refreshed; the original source tag remains unchanged.
+- Independent downloads matched their published hashes. All **330 portable files**
+  matched the checked build. PNG/ICO artwork matched the source assets, and direct
+  PE-resource inspection confirmed the approved 256-pixel icon in **both the app
+  executable and installer**. The obsolete logo.svg is absent from the new package.
+- The release verifier now checks the requested build commit and its actual passing
+  test report, instead of pinning the previous build's SHA and test count. Ten new
+  regressions reject mismatched commits, invalid/failed/skipped test evidence,
+  unavailable scans and changed files.
+- **Zero Actions artifacts uploaded.** Signing and physical-device limitations in
+  the earlier sections remain applicable; no comprehensive security certification
+  or new physical-device test matrix is claimed.

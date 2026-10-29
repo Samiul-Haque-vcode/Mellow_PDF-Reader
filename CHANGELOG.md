@@ -17,9 +17,10 @@ limits are recorded in [VALIDATION.md](VALIDATION.md).
 - Fixed legacy-Windows-encoding cases in release-file reading and GitHub CLI responses.
 - Consolidated the documentation guides and contribution templates on main.
 
-The earlier Windows build passed 723 tests. The later publishing-script
-follow-up passed 16 focused Windows tests. These results apply to the commits
-recorded in VALIDATION.md; refreshed-download evidence is recorded separately. Builds remain unsigned; physical-device validation
+The refreshed logo build passed **734 Windows tests**, packaged/installed/portable
+checks and the available Defender scan. Published hashes and embedded Windows
+icons were verified. Earlier build results and their exact commits remain in
+[VALIDATION.md](VALIDATION.md). Builds remain unsigned; physical-device validation
 has documented gaps.
 
 ## Earlier source updates
