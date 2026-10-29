@@ -1,0 +1,39 @@
+name: Distribution inventory
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/distribution-audit.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inventory:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[distribution audit]')
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m pytest -q tests/test_notice_distribution_gate.py tests/test_build_verification.py tests/test_release_preparation.py
+      - run: python -m PyInstaller --noconfirm --clean --noupx --windowed --onedir --version-file packaging/version_info.txt --name MellowPDFReader --icon mellow/assets/mellow.ico --add-data "mellow/assets:mellow/assets" --collect-all PySide6.QtPdf --collect-all PySide6.QtPdfWidgets run_mellow.py
+      - run: python packaging/collect_notices.py dist/MellowPDFReader
+      - name: Record public distribution inventory
+        shell: python
+        run: |
+          import json,platform,sys
+          from pathlib import Path
+          from PySide6.QtCore import QLibraryInfo
+          report=json.loads(Path('dist/MellowPDFReader/licenses/DEPENDENCIES.json').read_text())
+          report['platform']=sys.platform
+          report['architecture']=platform.machine()
+          report['qt_build']=QLibraryInfo.build()
+          print('MELLOW_AUDIT_JSON='+json.dumps(report,separators=(',',':')))
+      - name: Record native copyright metadata
+        shell: pwsh
+        run: |
+          $MellowNativeMetadata = @(Get-ChildItem -Recurse -File dist/MellowPDFReader | Where-Object { $_.Extension -in '.dll','.pyd','.exe' } | ForEach-Object { @{name=$_.Name;company=$_.VersionInfo.CompanyName;copyright=$_.VersionInfo.LegalCopyright;version=$_.VersionInfo.FileVersion} })
+          Write-Output ('MELLOW_NATIVE_JSON=' + (ConvertTo-Json -InputObject $MellowNativeMetadata -Compress))
