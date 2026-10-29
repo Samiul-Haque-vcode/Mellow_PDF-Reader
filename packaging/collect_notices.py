@@ -10,7 +10,7 @@ import sys
 import sysconfig
 
 ROOT=Path(__file__).resolve().parents[1]
-PACKAGES=('PySide6','PySide6_Essentials','PySide6_Addons','PySide6_Pdf',
+PACKAGES=('PySide6_Essentials','PySide6_Pdf',
           'shiboken6','numpy','pypdf','pyinstaller')
 
 REVIEW_CHECKS=('qt_pdf_source_match','qt_runtime_notices','native_library_notices','lgpl_source_access')

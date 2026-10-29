@@ -4,15 +4,19 @@ param(
     [switch]$DistributionReady
 )
 $ErrorActionPreference = "Stop"
-py -3.12 -m venv .venv
+py -3.14 -m venv .venv
 if ($LASTEXITCODE -ne 0) { throw "Python setup failed" }
 $Python = ".\.venv\Scripts\python.exe"
+& $Python packaging/runtime_policy.py
+if ($LASTEXITCODE -ne 0) { throw "Install a supported, patched Python 3.14 runtime." }
 & $Python -m pip install -r requirements-dev.txt
 if ($LASTEXITCODE -ne 0) { throw "Dependency installation failed" }
 & $Python -m pytest -q
 if ($LASTEXITCODE -ne 0) { throw "Tests failed" }
-& $Python -m PyInstaller --noconfirm --clean --noupx --windowed --onedir --version-file packaging/version_info.txt --name MellowPDFReader --icon mellow/assets/mellow.ico --add-data "mellow/assets:mellow/assets" --collect-all PySide6.QtPdf --collect-all PySide6.QtPdfWidgets run_mellow.py
+& $Python -m PyInstaller --noconfirm --clean --noupx --exclude-module PIL --exclude-module reportlab --exclude-module pytest --windowed --onedir --version-file packaging/version_info.txt --name MellowPDFReader --icon mellow/assets/mellow.ico --add-data "mellow/assets:mellow/assets" --collect-all PySide6.QtPdf --collect-all PySide6.QtPdfWidgets run_mellow.py
 if ($LASTEXITCODE -ne 0) { throw "Packaging failed" }
+& $Python packaging/prepare_distribution.py dist/MellowPDFReader
+if ($LASTEXITCODE -ne 0) { throw "Distribution preparation failed" }
 $NoticeArguments = @("packaging/collect_notices.py", "dist/MellowPDFReader")
 if ($DistributionReady) { $NoticeArguments += "--require-complete" }
 & $Python @NoticeArguments

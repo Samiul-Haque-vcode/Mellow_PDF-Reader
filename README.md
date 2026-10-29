@@ -13,10 +13,10 @@ Mellow is a comfortable PDF reader for everyday reading, studying and comparing 
 
 **1.0.0 is a source release.** A Windows installer is not included: the exact bundled Qt/PDFium third-party attribution review remains incomplete. See [distribution notes](THIRD_PARTY.md). The source can be run using the instructions below; source archives are available from [Releases](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/releases).
 
-Install **Python 3.12, 64-bit**. In the repository folder, open PowerShell and run:
+Install **Python 3.14.10 or newer 3.14.x, 64-bit**. In the repository folder, open PowerShell and run:
 
 ```powershell
-py -3.12 -m venv .venv
+py -3.14 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe run_mellow.py
 ```
@@ -95,7 +95,7 @@ Shortcuts are customizable. Text fields keep their normal editing shortcuts.
 
 ## Building on Windows
 
-Install Python 3.12 x64 and **Inno Setup 6**, then run:
+Install Python 3.14.10 or newer 3.14.x x64 and **Inno Setup 6**, then run:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File packaging/windows.ps1

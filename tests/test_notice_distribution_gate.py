@@ -113,3 +113,18 @@ def test_strict_command_exits_nonzero_and_writes_actionable_inventory(tmp_path):
     assert report['qt_pdf_notices']['documents']==9
     assert not report['complete_attribution_review']
     assert 'REVIEW.json' in result.stdout
+
+
+def test_git_windows_line_endings_preserve_upstream_notice_hashes(tmp_path):
+    import subprocess
+    repository=tmp_path/'checkout';repository.mkdir()
+    def git(*args):
+        return subprocess.run(['git','-C',str(repository),*args],check=True,capture_output=True)
+    git('init');git('config','core.autocrlf','true')
+    shutil.copy2(ROOT/'.gitattributes',repository/'.gitattributes')
+    relative=Path('packaging/notices/qt-pdf-6.140.0/abseil.txt')
+    path=repository/relative;path.parent.mkdir(parents=True)
+    original=(ROOT/relative).read_bytes();path.write_bytes(original)
+    git('add','.gitattributes',relative.as_posix());path.unlink()
+    git('checkout-index','--force','--',relative.as_posix())
+    assert path.read_bytes()==original
