@@ -5,7 +5,7 @@ import math
 def crop_values(value):
     if not isinstance(value,(list,tuple)) or len(value)!=4:
         raise ValueError('Choose four page margins.')
-    if any(isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) or not 0<=v<=40 for v in value):
+    if any(isinstance(v,bool) or not isinstance(v,(int,float)) or not 0<=v<=40 or not math.isfinite(v) for v in value):
         raise ValueError('Margins must be between 0 and 40 percent.')
     return tuple(float(v) for v in value)
 

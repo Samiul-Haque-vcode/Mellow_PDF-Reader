@@ -301,13 +301,13 @@ class Reader(SelectionControls,QPdfView):
             return
         self._revision+=1
         self._pending=None
-        self.verticalScrollBar().setValue(self.verticalScrollBar().value()+direction*max(1,self.viewport().height()-self.fontMetrics().lineSpacing()*2))
+        self._set_scroll_position(self.verticalScrollBar(),self.verticalScrollBar().value()+direction*max(1,self.viewport().height()-self.fontMetrics().lineSpacing()*2))
         if self.custom_rendering:self.rotated_pages.update_navigation()
     def scroll_line(self,direction):
         self.flush_zoom()
         self._revision+=1
         self._pending=None
-        self.verticalScrollBar().setValue(self.verticalScrollBar().value()+direction*self.fontMetrics().lineSpacing())
+        self._set_scroll_position(self.verticalScrollBar(),self.verticalScrollBar().value()+direction*self.fontMetrics().lineSpacing())
         if self.custom_rendering:self.rotated_pages.update_navigation()
 
     def layout_pages(self):
@@ -616,7 +616,7 @@ class Reader(SelectionControls,QPdfView):
         y=self._selection_pointer.y()
         height=self.viewport().height()
         delta=-min(80,16+int(abs(y))) if y<12 else min(80,16+int(max(0,y-height)))
-        self.verticalScrollBar().setValue(self.verticalScrollBar().value()+delta)
+        self._set_scroll_position(self.verticalScrollBar(),self.verticalScrollBar().value()+delta)
         self.update_drag_selection()
     def paint_selection(self,painter):
         if not self.text_selection.ranges: return

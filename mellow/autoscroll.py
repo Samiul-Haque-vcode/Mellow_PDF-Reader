@@ -8,7 +8,7 @@ from shiboken6 import isValid
 
 
 def scroll_speed(value):
-    if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value):return 24
+    if isinstance(value,bool) or not isinstance(value,(int,float)) or (isinstance(value,float) and not math.isfinite(value)):return 24
     return max(5,min(200,round(value)))
 
 
@@ -97,7 +97,7 @@ class AutoScroll(QObject):
                 self._fraction-=distance
                 if distance:
                     r._revision+=1;r._pending=None
-                    bar.setValue(bar.value()+distance)
+                    r._set_scroll_position(bar,bar.value()+distance)
                     if r.custom_rendering:r.rotated_pages.update_navigation()
                 return
             if not discrete or not self.has_next(r):

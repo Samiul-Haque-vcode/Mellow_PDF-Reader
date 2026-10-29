@@ -10,3 +10,11 @@ mellow-data/
 portable.ini
 benchmark-results.json
 test-results.xml
+.env
+.env.*
+*.pfx
+*.p12
+*.pem
+*.key
+.coverage
+htmlcov/

@@ -1,50 +1,28 @@
-# Validation — 0.0.5
+# Validation — 1.0.0
 
-## Page-preview update in 0.0.5
+Review date: 29 October 2026. These results describe source checks on Linux with Python 3.12 and Qt 6.12. They do not establish behavior on physical Windows hardware.
 
-The page-preview popup offers only **Small (three columns)** and **Large (two
-columns)**. Cell sizes adapt to the viewport width. A stable scrollbar gutter
-prevents reflow oscillation; a one-pixel width allowance avoids Qt wrapping the
-last cell when row widths fit exactly. Resize updates are coalesced and stopped
-when the popup closes. The arrangement workspace keeps its existing layout.
+## Functional checks
 
-The final affected-feature suite passed **63 tests in 17.63 seconds**: page-preview
-layout at 420/500/640 logical pixels, both sizes, selection/Current indication,
-resize and activation, scrollbar popup routing, source closure, PDF-tool page
-arrangement and supersampled thumbnail rendering. Tests retain the two-request
-and 8 MiB cache limits. Both layouts were captured from the actual Qt app and
-visually inspected; screenshots remain outside the repository.
+- New release-boundary regressions reproduced **8 failures before fixes**. The final 11 cases check scrolling at Qt's integer limits, unusually large/non-finite numeric inputs and rejected backup imports preserving existing metadata.
+- Focused boundary, backup, position and auto-scroll coverage: **76 passed** before the pypdf update. The complete suite below is the verification against pypdf 6.21.4.
+- Full regression suite against pypdf 6.21.4: **678 passed, 1 skipped, 1 warning in 356.59 seconds**. The skipped case requires native Windows Authenticode; the existing warning concerns a deprecated Qt caption enum.
+- Source-mode real-PDF smoke check: **exit 0**.
+- Python compilation, local documentation links and workflow structure/permission/upload gates: passed.
 
-App, executable resource and installer versions agree on **0.0.5**. No Actions,
-release, native Windows build or new security scan was run for this UI update.
-The full 0.0.4 regression/security results below are historical evidence for the
-preceding source; they are not a new full-suite run for 0.0.5.
+The suite uses generated real PDFs, including text, outlines, hyperlinks, figures and unusual page dimensions. It exercises navigation, search/copy, themes, previews, independent splits, saved locations, session restoration, tools, cancellation and metadata safety. It is not a comprehensive corpus of hostile or commercial PDFs.
 
-## Previous 0.0.4 validation
+## Security review
 
-Checked on 25 October 2026: Linux x86_64, Python 3.12, PySide6/Qt 6.12, pypdf 6.21.2, offscreen Qt.
+- Runtime dependency advisory lookup: **8 installed Python distributions, 0 known advisories, 0 skipped packages**, including pypdf 6.21.4. This does not cover every native component inside Qt/PDFium.
+- Bandit on application and packaging Python: **5 medium and 91 low findings; 0 parse errors**. The medium SQL findings use constant/whitelisted identifiers and bound record values. Low findings include smoke-test assertions and argument-list subprocess calls in OS/build helpers. Warnings were reviewed, not suppressed or represented as a clean scan.
+- Pattern check for private keys, common API-token formats and credential-bearing URLs in tracked source: no real credentials identified. Two matches are explicitly fake URLs used to test credential rejection. This is a limited heuristic check of the current source tree, not a guarantee about all possible secrets or Git history.
+- No private PDF, local database, environment file, rendering cache, demo media or compiled binary is intentionally included in the source tree. Tests use generated fixtures.
 
-- Full suite: **660 passed, 1 Windows-only skip, 1 existing Qt enum deprecation warning in 357.64 seconds**.
-- Focused metadata/reading/backup checks: **72 passed in 23.60 seconds**, overlapping the full suite.
-- Source smoke exited zero, including real PDF rendering, PDF-tool previews and metadata backup restoration.
-- App, executable version resource and installer are **0.0.4**. Workflow remains manual-only; source push uses `[skip ci]`.
+## Windows and release status
 
-## Reproduced defects and fixes
+The release workflow is configured to run native Windows caption/reading-aid checks, regression tests, a packaged real-PDF smoke check, installer/uninstaller checks and available Defender verification before publishing the source release. These are pending until the corresponding Actions run completes; workflow configuration alone is not evidence of a pass.
 
-Seven regression cases failed before the fixes: large saved/source coordinates overflowed Qt scrollbar integer conversion; Favorites and backup exports could overwrite a selected PDF; Favorites export could damage an existing destination on failure; and Favorites export could target the live database.
+Binary redistribution remains blocked by the incomplete version-specific Qt/PDFium attribution review described in [THIRD_PARTY.md](THIRD_PARTY.md). No trusted signing identity is configured. 1.0.0 publishes source only, without an installer or portable binary and without claiming a binary malware scan.
 
-Reader-controlled source/metadata positioning now clamps to each scrollbar's current limits before converting to Qt integers. New tests exercise restore, jump and resize anchors, then verify normal navigation still works. Further cases exercise infinities, NaN and an arbitrarily large integer at the conversion boundary.
-
-Favorites and app backups share an atomic JSON writer. Exports require a .json destination, reject the live database and reject an existing leading PDF header even when the file is named .json. App backups retain their additional outside-data-folder rule. Failed replacement leaves the old file intact and removes temporary output. Existing valid JSON export/import and app-backup roundtrips remain covered.
-
-Thirteen new regressions account for the suite change from 647 to 660 passing tests. The earlier link-handler, import validation, Explorer path, magnifier, Quick Jump and split-ratio protections remain in the suite.
-
-## Security checks
-
-A fresh pip-audit query of eight installed runtime packages reported **zero known advisories and zero skipped packages**. Bandit parsed application and packaging Python without errors and reported **5 medium / 91 low findings**, unchanged from the previous review. SQL warnings use constant/whitelisted identifiers and bound record values; low warnings concern diagnostic assertions and controlled argument-list subprocess calls. These are reviewed findings, not a claim of a clean static scan. See [SECURITY.md](SECURITY.md).
-
-Audit tools and reports remain outside application dependencies/repository contents. No user PDFs were sent to an advisory service. These checks do not cover every native Qt/PDFium component or certify arbitrary PDFs as safe.
-
-## Limits
-
-No native Windows build, installed-app check, Defender scan, signing or release was performed for this source update. Rebuild the application to apply source fixes to an installed copy. Physical Windows validation remains separate; see [the checklist](docs/windows-validation.md). Dependency redistribution obligations remain in [THIRD_PARTY.md](THIRD_PARTY.md).
+Physical-device checks for touchpad gestures, mixed DPI, Snap Layouts, transitions, accessibility and diverse real-world documents remain in [the Windows checklist](docs/windows-validation.md). Source tests and automated runner checks do not replace them.

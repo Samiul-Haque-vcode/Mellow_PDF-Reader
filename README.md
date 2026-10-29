@@ -3,46 +3,79 @@
 </p>
 <h1 align="center">Mellow PDF Reader</h1>
 <p align="center"><strong>A softer way to read.</strong></p>
-<p align="center">Version 0.0.5 · Windows 10/11 x64 · Offline · PDF only</p>
+<p align="center">Windows 10/11 · 64-bit · Offline · MIT-licensed source</p>
 
-Mellow is a compact desktop PDF reader for everyday reading, textbooks and comparing documents. Tabs and one slim toolbar leave most of the window for the page. Files stay in their original folders—there is no account, cloud service, telemetry or internal document library.
+Mellow is a comfortable PDF reader for everyday reading, studying and comparing documents. Compact tabs and one toolbar leave room for your pages. Your PDFs stay in their own folders, without accounts, telemetry, cloud services or library imports.
 
-## Reading features
+[Getting started](#getting-started) · [Features](#features) · [PDF tools](#pdf-tools) · [Settings](#settings-and-data) · [Build](#building-on-windows) · [License](#license-and-credits)
 
-- **Real PDF rendering:** Qt PDF, powered by PDFium, with smooth scrolling, zoom, Fit Width, Fit Page, actual size and independent rotation.
-- **Four reading themes:** Light, Sepia, Dark and Black. Sepia changes the actual page and surrounding canvas to a continuous warm paper shade. Theme tuning and figure-color preservation are in **Settings → Appearance**. Color preservation is a pixel heuristic; grayscale images may be tinted.
-- **Tabs and split reading:** compare two PDFs or two independent views of one PDF, horizontally or vertically. Resize, swap books, choose proportions or temporarily maximize a pane. Swapping books preserves the divider ratio.
-- **Page preview:** Small shows three pages per row; Large shows two. Thumbnail cells adapt to the popup width while keeping sharp source-PDF rendering.
-- **Page layouts:** Continuous, Single Page, Two Pages and Two Pages Continuous, with an optional separate cover. Saved document preferences take priority over defaults for new PDFs.
-- **Navigation:** printed PDF page labels, custom numbering, Back/Forward history, page previews and nested outline chapter navigation. Temporary **Quick Jump** markers return to a saved spot and participate in Back/Forward history; markers disappear when the app closes.
-- **Search and selection:** search with next/previous results, text highlighting, ordinary text selection and copying. Select between two points by clicking the start, scrolling and clicking the end; then preserve line breaks or join paragraphs. Larger copies offer progress and cancellation.
-- **Study aids:** a pointer-following magnifier, zoom lock, reversible reading-margin trimming, reading ruler, gentle auto-scroll and source-PDF reference previews. Native links are preferred; unlinked references use local matching with manual fallback.
-- **Fullscreen:** optional auto-hiding controls, with the same focused-pane toolbar in split reading.
+## Getting started
 
-## Home, saved places and settings
+**1.0.0 is a source release.** A Windows installer is not included: the exact bundled Qt/PDFium third-party attribution review remains incomplete. See [distribution notes](THIRD_PARTY.md). The source can be run using the instructions below; source archives are available from [Releases](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/releases).
 
-**Home** keeps Recent PDFs, Favorites and the three PDF tools together. Favorites are global saved locations; bookmarks belong to the active PDF and include its internal outline plus personal entries. Missing files offer a Locate action.
+Install **Python 3.12, 64-bit**. In the repository folder, open PowerShell and run:
 
-**Settings** has four sections:
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe run_mellow.py
+```
 
-| Section | Options |
-| --- | --- |
-| General | Startup, history, app backup/restore, Favorites import/export |
-| Reading | New-PDF layout/zoom defaults, gesture and auto-scroll speed, copy format, ruler height/opacity |
-| Appearance | Theme and tuning, figure colors, toolbar labels, Windows caption tabs, fullscreen auto-hide |
-| Shortcuts | Searchable commands, custom bindings, conflict checks and resets |
+Setup downloads dependencies. Reading and PDF tools work offline afterward.
 
-Reading sessions restore tabs, positions, zoom and split configuration. Backups contain metadata, not PDFs. Installing over an existing installation preserves data. Uninstalling removes that Windows user's Mellow metadata while preserving original PDFs and exported backups; keep a backup outside Mellow's folders before uninstalling.
+Choose **Open PDF** on Home, use **Ctrl+O**, or use **+** beside document tabs. The toolbar follows the focused pane when reading two documents. Find themes in **Settings → Appearance** and reading aids in **☰ → Reading**.
+
+## Features
+
+### Comfortable reading
+
+- **Light, Sepia, Dark and Black:** recolor PDF pages as well as the surrounding canvas. Sepia uses a continuous cream field with warm ink. Light preserves the original page colors.
+- **Theme tuning:** adjust warmth and contrast, with optional figure-color preservation. The toolbar keeps a consistent neutral appearance across themes.
+- **Layouts:** Continuous, Single Page, Two Pages and Two Pages Continuous, with an optional separate cover.
+- **Zoom and rotation:** Fit Width, Fit Page, Actual Size, mouse/touchpad zoom and independent rotation. Lock Zoom blocks zoom changes until unlocked.
+- **Fullscreen:** optionally hide controls and reveal them at the top edge.
+
+### Navigation and study
+
+- **Independent split reading:** read different PDFs or two locations in one PDF, side by side or top to bottom. Resize, swap books or temporarily maximize a pane; swapping preserves the divider ratio.
+- **Sharp page previews:** Small shows **three pages per row**; Large shows **two**. Thumbnails adapt to the popup width.
+- **Find text:** highlight results and move between matches without leaving your document.
+- **PDF navigation:** printed page labels, custom numbering, nested outline chapters and Back/Forward history.
+- **Quick Jump:** save a temporary reading marker and return after exploring. Returning preserves the departure location in Back/Forward history. Markers last for the current app session.
+- **Text selection:** select normally, select a page or the whole PDF, or choose two endpoints across pages. Copy with original line breaks or joined paragraphs; larger copies support cancellation.
+- **Reading aids:** pointer-following magnifier, adjustable ruler, gentle auto-scroll and reversible reading-margin trimming.
+- **Reference previews:** inspect native PDF links and locally matched references in a floating source-PDF preview; pin it or open the destination in the opposite pane.
+
+### Saved places
+
+**Home** brings together Recent PDFs, Favorites and PDF tools. **Favorites** save locations across documents; **Bookmarks** show the active PDF's outline and personal saved pages. Rename and remove personal entries, search saved places and locate missing files.
+
+Sessions restore open tabs, reading positions, zoom and split configuration. PDFs are opened directly and are never copied into an internal library.
 
 ## PDF tools
 
-- **Split / Extract Pages:** choose page ranges and save a new PDF.
-- **Merge PDFs:** order input documents, preview and combine them.
-- **Images to PDF:** order images and choose basic page sizing.
+| Tool | What it does |
+| --- | --- |
+| Split / Extract Pages | Save selected pages or ranges to a new PDF. |
+| Merge PDFs | Order multiple PDFs and combine them into one file. |
+| Images to PDF | Arrange images and choose basic page sizing. |
 
-Tools provide real output previews, page arrangement/rotation and cancellation. Source documents remain unchanged by default. They are available from Home and the main menu.
+Tools offer output previews, page arrangement, rotation and cancellation. Original documents remain unchanged by default. Access tools from Home or **☰**.
 
-## Useful default shortcuts
+## Settings and data
+
+| Section | Main options |
+| --- | --- |
+| General | Startup, recent history, app backup/restore, Favorites import/export |
+| Reading | Default layout/fit, zoom gestures, auto-scroll speed, copy format, ruler |
+| Appearance | Reading themes, figure colors, toolbar labels, caption tabs, fullscreen controls |
+| Shortcuts | Search commands, change bindings, check conflicts and reset defaults |
+
+Metadata is normally stored in `%LOCALAPPDATA%\Mellow\Mellow PDF Reader`. Portable mode uses a `portable.ini` marker beside the executable and stores metadata in `mellow-data` beside it. No rendered-page images are permanently stored.
+
+**Before uninstalling**, use Settings to save a backup outside Mellow's folders. Backups contain settings and saved locations, **not PDFs**. Installing over an existing installation preserves metadata; uninstalling removes that Windows user's Mellow metadata. Original PDFs and separately exported backups are preserved. Restore a backup after reinstalling; the referenced PDFs must still be available.
+
+## Default shortcuts
 
 | Keys | Action |
 | --- | --- |
@@ -52,80 +85,58 @@ Tools provide real output previews, page arrangement/rotation and cancellation. 
 | Ctrl+C | Copy selected text |
 | Ctrl+M / Ctrl+Shift+M | Set / return to Quick Jump |
 | Space / Shift+Space | Forward / back one screen |
-| Up / Down | Scroll by a line-sized step |
+| Up / Down | Scroll a line-sized step |
 | Left / Right | Previous / next page |
-| Alt+Left / Alt+Right | Back / Forward through visited locations |
-| Ctrl+Tab / Ctrl+Shift+Tab | Switch document tabs |
+| Alt+Left / Alt+Right | Back / Forward |
+| Ctrl+Tab / Ctrl+Shift+Tab | Next / previous tab |
 | Ctrl+, | Settings |
 
-Text fields keep their normal editing shortcuts. Bindings are customizable.
+Shortcuts are customizable. Text fields keep their normal editing shortcuts.
 
-## Run from source
+## Building on Windows
 
-Install **Python 3.12, 64-bit**, then run from the repository folder:
-
-```powershell
-py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe run_mellow.py
-```
-
-Dependencies are downloaded during setup; the installed reader works offline. Normal metadata is stored under `%LOCALAPPDATA%\Mellow\Mellow PDF Reader`. A portable distribution uses a `portable.ini` marker beside the executable and a `mellow-data` folder.
-
-## Build for Windows
-
-Install **Inno Setup 6**, then run:
+Install Python 3.12 x64 and **Inno Setup 6**, then run:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File packaging/windows.ps1
 ```
 
-The script creates its Python environment, runs tests, builds the executable with PyInstaller, collects dependency notices, checks packaged PDF rendering and builds an installer. Outputs:
+The script creates an environment, runs tests, builds with PyInstaller, collects notices, checks packaged rendering and compiles an installer. Local outputs:
 
-- `dist/MellowPDFReader/MellowPDFReader.exe` — keep its adjacent dependencies together.
-- `dist/MellowPDFReader-Setup.exe` — installer.
-- `dist/build-verification/` — hashes, signature and available antivirus results.
+| Path | Contents |
+| --- | --- |
+| `dist/MellowPDFReader/` | Executable and required adjacent libraries |
+| `dist/MellowPDFReader-Setup.exe` | Installer |
+| `dist/build-verification/` | Hashes, package inventory, signature and available Defender results |
 
-See [security and signing](SECURITY.md) and [Windows validation](docs/windows-validation.md). Unsigned builds may show Windows reputation warnings. Version 0.0.5 is a source publication; no newly compiled Windows executable or installer is included here.
+Keep the executable with its adjacent dependencies. Complete the attribution requirements in [THIRD_PARTY.md](THIRD_PARTY.md) before redistributing binaries. Builds are unsigned unless you provide a trusted signing identity; see [security and signing](SECURITY.md). Mellow does not install a certificate or alter Windows protection settings.
 
-The GitHub workflow is **manual only**. Pushes and pull requests do not start it; artifact uploads are off by default. No release is published automatically.
+Ordinary pushes do not start builds. The workflow supports manual builds, with artifact uploads off by default. The explicit 1.0.0 release commit requests Windows checks and source-release publication; it does not publish incomplete binary packages.
 
-## Develop and test
+## Development and verification
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-[Validation results and limitations](VALIDATION.md) distinguish source tests from native Windows and packaged-app checks.
-
 ```text
-mellow/       Application, PDF views, storage, controls and branding
-packaging/    Windows build, installer, signing and license collection
-tests/       Real-PDF regression tests
-docs/        Windows validation checklist
+mellow/       Reader, PDF views, storage, controls and branding
+packaging/    Windows build, installer, signing and notice collection
+tests/        Real-PDF regression tests
+docs/         Release notes and Windows validation checklist
 ```
 
-Tests and developer dependencies are not part of the installed app. This repository omits showcase videos, screenshots, old roadmaps, historical release records, caches and compiled binaries. Source stays readable rather than minified.
+Tests and development tools are excluded from installed app packages. See [validation evidence](VALIDATION.md) and the [Windows device checklist](docs/windows-validation.md). Report reproducible bugs through [Issues](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/issues), including the version and steps. Avoid uploading private documents or personal backup files.
 
-## Security
+## Limitations
 
-PDF links are limited to ordinary HTTP/HTTPS and email URLs. Local-file and custom
-protocol handlers, URL credentials and email attachment parameters are blocked.
-Favorites imports have a 32 MB limit and reject invalid pages, non-finite positions
-and malformed paths before changing saved data. PDF utilities require pypdf 6.21.2
-or newer to include fixes for three malformed-PDF denial-of-service advisories.
-Saved and imported reading positions are clamped before conversion to Qt scrollbar
-integers. Favorites and app backups use atomic JSON exports that reject live metadata
-and PDF destinations; interrupted writes preserve the previous file.
-See [the security review](SECURITY.md) for scan scope and remaining limitations.
+Search and selection require an extractable text layer; OCR is not included. Complex layouts can affect text order and automatic reference matching. Figure preservation uses pixel-based heuristics: grayscale images may be tinted, and low-contrast colored ink may be adjusted in dark modes. Themes do not modify the source PDF.
 
-## Scope and limitations
-
-Mellow is a reader with small PDF utilities. It does not include OCR, AI services, annotation editing, cloud synchronization or PDF-to-Markdown conversion. Selection and search need an extractable text layer. Reference matching and text ordering in complex layouts can be imperfect. Reading colors are comfort preferences, not a medical claim. Physical touchpad, mixed-DPI and accessibility validation require separate device testing.
+Mellow has no annotation editor, cloud synchronization, AI service or PDF-to-Markdown conversion. Physical touchpad behavior, mixed-DPI displays and accessibility need device testing. Tests do not certify that arbitrary PDFs are safe; keep dependencies current and follow [security guidance](SECURITY.md).
 
 ## License and credits
 
-Mellow's source uses the [MIT license](LICENSE). Dependencies keep their own licenses; read [THIRD_PARTY.md](THIRD_PARTY.md), including the outstanding version-specific Qt/PDFium attribution review before distributing binaries.
+Mellow's source uses the [MIT license](LICENSE). Dependencies retain their own terms; see [THIRD_PARTY.md](THIRD_PARTY.md). MIT licensing of the app does not replace Qt/PDFium redistribution requirements.
 
 Project owner: [Samiul-Haque-vcode](https://github.com/Samiul-Haque-vcode). Developed with ChatGPT (OpenAI) for AI-assisted design, coding and testing. Mellow is an independent project.

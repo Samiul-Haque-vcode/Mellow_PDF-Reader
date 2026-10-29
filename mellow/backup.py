@@ -24,7 +24,7 @@ def require(condition):
 
 
 def number(value, low=-1e9, high=1e9):
-    return type(value) in (int, float) and math.isfinite(value) and low <= value <= high
+    return type(value) in (int, float) and low <= value <= high and math.isfinite(value)
 
 
 def text(value):

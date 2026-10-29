@@ -33,6 +33,6 @@ The currently installed Qt wheels do not provide the full version-specific
 Qt/PDFium attribution bundle. `complete_attribution_review` therefore remains
 false. Before a public release, obtain and review the exact Qt/PDFium source
 notices, Qt's native dependencies and any wheel-bundled libraries; retain their
-copyrights and required terms. This source distribution does not claim
+copyrights and required terms. The 1.0.0 release therefore contains source only, without redistributed app binaries. This source distribution does not claim
 that the inventory closes that review. Application MIT licensing and successful
 malware/build checks do not resolve a dependency attribution gap.

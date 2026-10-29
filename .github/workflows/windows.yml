@@ -1,7 +1,14 @@
 name: Windows build
 on:
+  push:
+    branches: [main]
+    paths: ['mellow/__init__.py']
   workflow_dispatch:
     inputs:
+      publish_source_release:
+        description: Publish the 1.0.0 source release after successful Windows checks
+        type: boolean
+        default: false
       upload_artifacts:
         description: Upload short-lived build artifacts (uses Actions storage)
         type: boolean
@@ -10,6 +17,7 @@ permissions:
   contents: read
 jobs:
   build:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[release 1.0.0]')
     runs-on: windows-latest
     timeout-minutes: 35
     steps:
@@ -108,3 +116,23 @@ jobs:
           name: Windows-caption-verification
           retention-days: 1
           path: dist/caption-verification/
+
+  publish:
+    needs: build
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || inputs.publish_source_release)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check release identity
+        run: |
+          python -c "from mellow import __version__; assert __version__ == '1.0.0'"
+      - name: Publish source release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          gh release create v1.0.0
+          --target "$GITHUB_SHA"
+          --title "Mellow PDF Reader 1.0.0"
+          --notes-file docs/releases/1.0.0.md
