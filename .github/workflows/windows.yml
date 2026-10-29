@@ -37,6 +37,9 @@ jobs:
       - run: python -m PyInstaller --noconfirm --clean --noupx --windowed --onedir --version-file packaging/version_info.txt --name MellowPDFReader --icon mellow/assets/mellow.ico --add-data "mellow/assets:mellow/assets" --collect-all PySide6.QtPdf --collect-all PySide6.QtPdfWidgets run_mellow.py
       - run: python packaging/collect_notices.py dist/MellowPDFReader
       - run: python packaging/smoke_test.py dist/MellowPDFReader/MellowPDFReader.exe
+      - name: Require complete attribution before uploading binaries
+        if: github.event_name == 'workflow_dispatch' && inputs.upload_artifacts
+        run: python packaging/collect_notices.py dist/MellowPDFReader --require-complete
       - name: Build installer
         shell: pwsh
         run: |

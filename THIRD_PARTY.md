@@ -29,10 +29,24 @@ Include the corresponding library source or a license-compliant source offer
 when the chosen distribution method requires it; general upstream links alone
 are not represented as fulfilling every LGPL redistribution obligation.
 
-The currently installed Qt wheels do not provide the full version-specific
-Qt/PDFium attribution bundle. `complete_attribution_review` therefore remains
-false. Before a public release, obtain and review the exact Qt/PDFium source
-notices, Qt's native dependencies and any wheel-bundled libraries; retain their
-copyrights and required terms. The 1.0.0 release therefore contains source only, without redistributed app binaries. This source distribution does not claim
-that the inventory closes that review. Application MIT licensing and successful
-malware/build checks do not resolve a dependency attribution gap.
+The development wheels lack the complete attribution materials. Nine upstream Qt
+PDF 6.140.0 notices have now been collected in `packaging/notices/qt-pdf-6.140.0/`.
+`qt-pdf-manifest.json` records their documentation URLs, versions and hashes. The
+collector checks the snapshot against the installed PySide6_Pdf version and
+verifies file integrity. A documentation-version match does not establish the
+wheel's exact source revisions.
+
+Binary redistribution still needs four completed checks: exact Qt PDF source
+matching, Qt runtime notices, all bundled native-library notices, and LGPL
+corresponding-source access. See [the release checklist](docs/release-checklist.md)
+for evidence requirements and the REVIEW.json format. The collector verifies the
+recorded package versions, platform, Python, native-file inventory and evidence
+hashes, then reports specific gaps. It does not perform the legal review itself.
+
+Use `python packaging/collect_notices.py dist/MellowPDFReader --require-complete`
+or `packaging/windows.ps1 -DistributionReady` to reject incomplete evidence.
+GitHub binary artifact uploads also require this check. The 1.0.0 release remains
+source-only; no installer is published by this follow-up change. Application MIT
+licensing, matching evidence and passed malware checks do not independently
+resolve redistribution obligations. Trusted publisher signing is a separate,
+optional identity step and is not the attribution blocker.

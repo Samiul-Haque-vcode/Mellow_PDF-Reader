@@ -109,7 +109,7 @@ The script creates an environment, runs tests, builds with PyInstaller, collects
 | `dist/MellowPDFReader-Setup.exe` | Installer |
 | `dist/build-verification/` | Hashes, package inventory, signature and available Defender results |
 
-Keep the executable with its adjacent dependencies. Complete the attribution requirements in [THIRD_PARTY.md](THIRD_PARTY.md) before redistributing binaries. Builds are unsigned unless you provide a trusted signing identity; see [security and signing](SECURITY.md). Mellow does not install a certificate or alter Windows protection settings.
+Keep the executable with its adjacent dependencies. Complete the attribution requirements in [THIRD_PARTY.md](THIRD_PARTY.md) before redistributing binaries. Use `packaging/windows.ps1 -DistributionReady` to require the recorded notice review and a successful Defender scan; see the [release checklist](docs/release-checklist.md). Builds are unsigned unless you provide a trusted signing identity; see [security and signing](SECURITY.md). Mellow does not install a certificate or alter Windows protection settings.
 
 Ordinary pushes do not start builds. The workflow supports manual builds, with artifact uploads off by default. The explicit 1.0.0 release commit requests Windows checks and source-release publication; it does not publish incomplete binary packages.
 

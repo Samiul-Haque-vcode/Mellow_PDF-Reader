@@ -1,25 +1,26 @@
 Qt for Python / PySide6 / Qt PDF
 
 The wheel metadata declares LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only.
-This folder includes the LGPL 3.0 and GPL 3.0 license texts. The LGPL 3.0
-incorporates terms of GPL 3.0. Distribution uses dynamically loaded Qt libraries.
+This folder includes LGPL 3.0 and GPL 3.0, incorporated by LGPL 3.0.
+Qt libraries are loaded dynamically and kept separate from the executable.
 
-Qt source, source releases, and source build instructions:
+The qt-pdf-6.140.0 folder contains nine upstream license-text snapshots for
+PDFium, Chromium, Abseil, FreeType, fast_float, ICU, libjpeg-turbo, libpng and
+zlib. qt-pdf-manifest.json records the source URL, documentation version,
+retrieval date, original HTML SHA-256 and extracted text SHA-256 for each.
+Text was extracted from the upstream license code blocks, decoding HTML
+entities. These are attribution materials, not an assertion that the exact
+wheel's corresponding sources or every other native library were reviewed.
+
+Qt source and build instructions:
 https://code.qt.io/cgit/qt/qtwebengine.git/
 https://download.qt.io/official_releases/QtForPython/
 https://doc.qt.io/qtforpython-6/building_from_source/index.html
-
-PDFium and Qt's third-party components have their own license notices:
 https://doc.qt.io/qt-6/qtpdf-licensing.html
-https://doc.qt.io/qt-6/licenses-used-in-qt.html
-https://pdfium.googlesource.com/pdfium/+/refs/heads/main/LICENSE
 
-IMPORTANT DISTRIBUTION LIMITATION: installed PySide6 6.12 wheels in the
-Linux development environment did not contain the full version-specific
-Qt/PDFium third-party attribution bundle. This inventory and the standard
-license texts do not replace those notices. Collect and review the exact
-Qt/PDFium third-party notices before making a public release.
-
-The README has application and dependency build instructions. The onedir
-package keeps Qt DLLs separate from the executable so they can be replaced
-with compatible versions, subject to Qt's binary compatibility requirements.
+Before binary distribution, finish the exact-source match, Qt runtime and
+native-library notice review, and LGPL corresponding-source access. Record
+that work in REVIEW.json with matching package versions, platform, Python,
+native-file hashes and hashed notice/evidence files. The collector verifies
+that evidence has not changed; it does not perform the legal review itself.
+See docs/release-checklist.md in the source repository for the record format.

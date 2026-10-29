@@ -1,0 +1,73 @@
+{
+  "format": 1,
+  "qt_pdf_version": "6.140.0",
+  "distribution": "PySide6_Pdf",
+  "distribution_version": "6.12.0.140",
+  "retrieved_utc": "2026-10-29T14:42:33.683611+00:00",
+  "scope": "Upstream Qt PDF license-text snapshot. Matching this documentation version to the exact wheel source and reviewing other native libraries remain separate requirements.",
+  "documents": [
+    {
+      "path": "qt-pdf-6.140.0/abseil.txt",
+      "url": "https://doc.qt.io/qtpdf/qtpdf-3rdparty-abseil.html",
+      "title": "Abseil | Qt PDF | Qt Pdf 6.140.0",
+      "sha256": "b68caf3e8027b0dac4a6acd59527b1a9d661bf69d24752ef74c7d398fa557986",
+      "source_html_sha256": "197050c0383e53c23fb80bde1aa9e076c16b4cabdd5f30d5ff4ad3ff6569bacd"
+    },
+    {
+      "path": "qt-pdf-6.140.0/freetype.txt",
+      "url": "https://doc.qt.io/qtpdf/qtpdf-3rdparty-freetype.html",
+      "title": "FreeType | Qt PDF | Qt Pdf 6.140.0",
+      "sha256": "97479118b04b703599687272ca3196067699123381454948830cd3c394e4f773",
+      "source_html_sha256": "48d579a16b273864b494affeece9896b65d8a0b581b99496080a5b7058601098"
+    },
+    {
+      "path": "qt-pdf-6.140.0/pdfium.txt",
+      "url": "https://doc.qt.io/qtpdf/qtpdf-3rdparty-pdfium.html",
+      "title": "PDFium | Qt PDF | Qt Pdf 6.140.0",
+      "sha256": "1fe9dea718fbd75cf149adaf4d8a22a4335604d964ddb76d1b45383dec8668c9",
+      "source_html_sha256": "8df0cb4c39bc213d1683b23837fc96812e1d970a6c88a1789d7fbbd277912caf"
+    },
+    {
+      "path": "qt-pdf-6.140.0/the-chromium-project.txt",
+      "url": "https://doc.qt.io/qtpdf/qtpdf-3rdparty-the-chromium-project.html",
+      "title": "The Chromium Project | Qt PDF | Qt Pdf 6.140.0",
+      "sha256": "368cca1106be99d39ecd32a38d8305585d802a475effb66380b91ffc9bcf709b",
+      "source_html_sha256": "fe54450095e482a634714d4900918097aa8f1746a8ac59d8a99e38506531c57b"
+    },
+    {
+      "path": "qt-pdf-6.140.0/fast-float.txt",
+      "url": "https://doc.qt.io/qtpdf/qtpdf-3rdparty-fast-float.html",
+      "title": "fast_float | Qt PDF | Qt Pdf 6.140.0",
+      "sha256": "e562f3f974ced7e69dd1db77b820b36bcf8f30377f1aa105723fba449c53c4e6",
+      "source_html_sha256": "89eae9e2e04e2344b7b8b751bdfc57be1544a5f9edc05d98959fc3fba47b521a"
+    },
+    {
+      "path": "qt-pdf-6.140.0/icu.txt",
+      "url": "https://doc.qt.io/qtpdf/qtpdf-3rdparty-icu.html",
+      "title": "icu | Qt PDF | Qt Pdf 6.140.0",
+      "sha256": "32076dd3a9b921e903648bd08e53cd09aa8455d7ac2a0e419f2f4d0821dfcbc4",
+      "source_html_sha256": "2d37fa05800b5a6428f304324936660d59978406cd316f2ab757870136672bf6"
+    },
+    {
+      "path": "qt-pdf-6.140.0/libjpeg-turbo.txt",
+      "url": "https://doc.qt.io/qtpdf/qtpdf-3rdparty-libjpeg-turbo.html",
+      "title": "libjpeg-turbo | Qt PDF | Qt Pdf 6.140.0",
+      "sha256": "96f5b328adbb78eeaaec6980d73fd558cb1e4d62560ed615646bc3cf5e532430",
+      "source_html_sha256": "436211ffc5f37a9971a1a1a8d3cecd06f5058fb7aba03b99611c7cebd752c028"
+    },
+    {
+      "path": "qt-pdf-6.140.0/libpng.txt",
+      "url": "https://doc.qt.io/qtpdf/qtpdf-3rdparty-libpng.html",
+      "title": "libpng | Qt PDF | Qt Pdf 6.140.0",
+      "sha256": "bdb0a645ea18c60507d0368379b1ac5474b92255fcc2d115e07486a7672ba526",
+      "source_html_sha256": "db40fb39cd2498c9743fe48fda4de6d985675ded72cf0d7f470dec9f06cd63ae"
+    },
+    {
+      "path": "qt-pdf-6.140.0/zlib.txt",
+      "url": "https://doc.qt.io/qtpdf/qtpdf-3rdparty-zlib.html",
+      "title": "zlib | Qt PDF | Qt Pdf 6.140.0",
+      "sha256": "e1cfcc55c325b3f78cf55df9664abaa066e2271dffe8213347d9fccdfbac8f2c",
+      "source_html_sha256": "ea61aecf44e870a525d7a79a1e30c2a96c9d59dbe2095f7b08c01adc8a0bab9a"
+    }
+  ]
+}

@@ -21,8 +21,29 @@ The suite uses generated real PDFs, including text, outlines, hyperlinks, figure
 
 ## Windows and release status
 
-The release workflow is configured to run native Windows caption/reading-aid checks, regression tests, a packaged real-PDF smoke check, installer/uninstaller checks and available Defender verification before publishing the source release. These are pending until the corresponding Actions run completes; workflow configuration alone is not evidence of a pass.
+The 1.0.0 [Windows run](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/actions/runs/40888717597)
+completed successfully: **679 tests passed**, native caption/reading-aid checks,
+packaged rendering and installer/uninstaller checks passed. Defender reported
+**NoThreatsReported**; executable and installer were **NotSigned**. No artifacts
+were uploaded. These results describe that commit/build, not a newly compiled
+follow-up binary.
 
 Binary redistribution remains blocked by the incomplete version-specific Qt/PDFium attribution review described in [THIRD_PARTY.md](THIRD_PARTY.md). No trusted signing identity is configured. 1.0.0 publishes source only, without an installer or portable binary and without claiming a binary malware scan.
 
 Physical-device checks for touchpad gestures, mixed DPI, Snap Layouts, transitions, accessibility and diverse real-world documents remain in [the Windows checklist](docs/windows-validation.md). Source tests and automated runner checks do not replace them.
+
+## Attribution-check follow-up
+
+This packaging-only follow-up collected nine upstream Qt PDF 6.140.0 notices
+(about 70 KB), with original-page and extracted-text hashes. Source-version
+matching, other native-library review and LGPL source-access work remain pending.
+The collector now inventories actual bundled native files and validates a recorded
+review against versions, platform/Python and evidence hashes. Binary artifact
+uploads and DistributionReady builds reject incomplete records.
+
+Focused notice-gate, build-verification and release-preparation tests: **36 passed,
+1 Windows-only skip** on Linux. Cases include changed/added native binaries,
+updated dependency versions, corrupted notices, missing review checks, stale output
+reviews and evidence paths escaping the license folder. No reader code changed,
+so the prior full-suite results remain the functional baseline; this follow-up
+has not run a new native Windows build or published binaries.

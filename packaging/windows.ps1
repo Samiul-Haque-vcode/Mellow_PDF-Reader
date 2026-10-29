@@ -1,6 +1,7 @@
 param(
     [string]$CertificateThumbprint = "",
-    [string]$TimestampUrl = "https://timestamp.digicert.com"
+    [string]$TimestampUrl = "https://timestamp.digicert.com",
+    [switch]$DistributionReady
 )
 $ErrorActionPreference = "Stop"
 py -3.12 -m venv .venv
@@ -12,7 +13,9 @@ if ($LASTEXITCODE -ne 0) { throw "Dependency installation failed" }
 if ($LASTEXITCODE -ne 0) { throw "Tests failed" }
 & $Python -m PyInstaller --noconfirm --clean --noupx --windowed --onedir --version-file packaging/version_info.txt --name MellowPDFReader --icon mellow/assets/mellow.ico --add-data "mellow/assets:mellow/assets" --collect-all PySide6.QtPdf --collect-all PySide6.QtPdfWidgets run_mellow.py
 if ($LASTEXITCODE -ne 0) { throw "Packaging failed" }
-& $Python packaging/collect_notices.py dist/MellowPDFReader
+$NoticeArguments = @("packaging/collect_notices.py", "dist/MellowPDFReader")
+if ($DistributionReady) { $NoticeArguments += "--require-complete" }
+& $Python @NoticeArguments
 if ($LASTEXITCODE -ne 0) { throw "Notice collection failed" }
 if ($CertificateThumbprint) {
     & $Python packaging/sign_windows.py --thumbprint $CertificateThumbprint --timestamp $TimestampUrl dist/MellowPDFReader/MellowPDFReader.exe
@@ -26,6 +29,7 @@ if (!(Test-Path $Compiler)) { throw "Install Inno Setup 6 to compile packaging/m
 & $Compiler packaging/mellow.iss
 if ($LASTEXITCODE -ne 0) { throw "Installer compilation failed" }
 $VerificationArgs = @("packaging/verify_windows.py")
+if ($DistributionReady) { $VerificationArgs += "--require-defender" }
 if ($CertificateThumbprint) {
     & $Python packaging/sign_windows.py --thumbprint $CertificateThumbprint --timestamp $TimestampUrl dist/MellowPDFReader-Setup.exe
     if ($LASTEXITCODE -ne 0) { throw "Installer signing failed" }
