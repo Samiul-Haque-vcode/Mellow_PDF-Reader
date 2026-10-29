@@ -94,12 +94,22 @@ Build commit: `a247de8b1a3437182baf957a998c0bdc62dac3ff`.
   Git tree with Windows text line endings. License/notice bytes remain unchanged.
   All **132 native libraries** retain complete notice mappings. A focused read-only
   Windows workflow verifies the corrected scripts and published release evidence.
-- Fresh static analysis of application and packaging code: **0 high, 6 medium,
+- Fresh static analysis of application and packaging code: **0 high, 7 medium,
   98 low findings; 0 parse errors**. Five medium SQL warnings use fixed/whitelisted
   identifiers and bound values. The additional XML warning parses the locally
   generated pytest report in the release job, not user PDFs or downloaded XML.
-  These findings were reviewed, not reported as a warning-free scan.
+  The URL warning in the read-only verifier uses a fixed HTTPS GitHub release
+  prefix and validates downloaded evidence hashes. These findings were reviewed,
+  not reported as a warning-free scan.
 
 Download links and exact build evidence are at the
 [1.0.0 release](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/releases/tag/v1.0.0).
 Physical-device validation and signing limitations above still apply.
+
+The follow-up [Windows verification run](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/actions/runs/40935175345)
+**passed**: all **16 focused release-script tests** passed on Python 3.14.10,
+including the file and GitHub-response encoding regressions. The corrected CLI
+wrapper read the real GitHub response successfully. All **10 published assets**,
+source archive sizes/hashes, the original tag, **723-test** build evidence and
+Defender/signature results verified. This job only read existing release data;
+it uploaded **zero Actions artifacts** and did not rebuild or replace downloads.
