@@ -85,3 +85,18 @@ def test_preparation_handles_unicode_under_non_utf8_system_locale(tmp_path):
     assert '“Mellow”' in (dist/'release/release-notes.md').read_text(encoding='utf8')
     manifest=json.loads((dist/'release/assets.json').read_text(encoding='utf8'))
     assert len(manifest['files'])==5 and all((dist/'release'/r['name']).is_file() for r in manifest['files'])
+
+
+def test_github_response_decodes_utf8_under_non_utf8_system_locale(tmp_path):
+    import json,os,subprocess,sys
+    module=str(Path(assets.__file__).resolve())
+    response=json.dumps({'body':'“Mellow” — A softer way to read.'},ensure_ascii=False).encode('utf8')
+    child='import sys;sys.stdout.buffer.write('+repr(response)+')'
+    code=(f'import importlib.util,json,sys;from pathlib import Path;s=importlib.util.spec_from_file_location("assets",{module!r});'
+          f'm=importlib.util.module_from_spec(s);s.loader.exec_module(m);m.ROOT=Path({str(tmp_path)!r});original=m.subprocess.run;'
+          f'm.subprocess.run=lambda command,**kwargs:original([sys.executable,"-c",{child!r}],**kwargs);'
+          'print(json.dumps(json.loads(m.github_cli("api","fixture"))))')
+    env=os.environ.copy();env.update(PYTHONUTF8='0',PYTHONCOERCECLOCALE='0',LC_ALL='C')
+    result=subprocess.run([sys.executable,'-c',code],env=env,capture_output=True,text=True,timeout=30)
+    assert result.returncode==0,result.stderr
+    assert json.loads(result.stdout)==json.loads(response)

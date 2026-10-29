@@ -11,7 +11,7 @@ Mellow is a comfortable PDF reader for everyday reading, studying and comparing 
 
 ## Getting started
 
-Windows downloads are on [Releases](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/releases/tag/v1.0.0) once their release checks complete. Choose **Setup x64** for installation, or extract the entire **Portable x64** ZIP and run `MellowPDFReader.exe`. Keep its adjacent folders. Packages are unsigned; see [security and signing](SECURITY.md).
+**Windows 1.0.0 is available** on [Releases](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/releases/tag/v1.0.0). Choose **Setup x64** for installation, or extract the entire **Portable x64** ZIP and run `MellowPDFReader.exe`. Keep its adjacent folders. Packages are unsigned; see [security and signing](SECURITY.md).
 
 For source builds, use the explicitly named **MellowPDFReader-1.0.0-Source.zip** matching the Windows downloads. Separate Qt/PySide source archives are for rebuilding those libraries and are not needed to run Mellow.
 

@@ -68,3 +68,38 @@ freeze/installer/portable checks, notice gate, Defender scan and source-archive
 hash verification before uploading executables. Its Verification ZIP records the
 actual final build's test totals and security results. A publisher certificate
 and physical-device validation remain separate limitations.
+
+## Published Windows downloads — 30 October 2026
+
+Build commit: `a247de8b1a3437182baf957a998c0bdc62dac3ff`.
+
+- Windows Python **3.14.10**: **723 passed, 1 warning in 615.69 seconds**;
+  no skipped tests. The warning is the existing Qt caption enum deprecation.
+- Native caption and reading-aid checks, exact-version attribution gate, frozen,
+  installed and portable PDF/tool smoke tests passed. Installer registration,
+  default-application preservation, update preservation and uninstall/data cleanup
+  checks passed.
+- Defender: **NoThreatsReported** for the app and installer. Both signatures:
+  **NotSigned**. No trusted publisher identity is configured.
+- All ten release assets uploaded, including the installer, portable ZIP, matching
+  source ZIP, verification ZIP, checksums and five complete library source archives.
+  Original public source tag retained. No Actions artifacts uploaded.
+- The release job's final API-response check failed **after successful uploads and
+  release-note publication**, due to Windows decoding UTF-8 GitHub CLI output as
+  cp1252. This affected the publishing script, not the reader or scan results.
+  The CLI wrapper now explicitly decodes UTF-8. Both file-reading and CLI-response
+  regressions exercise a non-UTF-8 system locale.
+- Independent public-download verification passed: SHA-256 values match, all
+  **331 portable files** match the checked build, and the source ZIP matches its
+  Git tree with Windows text line endings. License/notice bytes remain unchanged.
+  All **132 native libraries** retain complete notice mappings. A focused read-only
+  Windows workflow verifies the corrected scripts and published release evidence.
+- Fresh static analysis of application and packaging code: **0 high, 6 medium,
+  98 low findings; 0 parse errors**. Five medium SQL warnings use fixed/whitelisted
+  identifiers and bound values. The additional XML warning parses the locally
+  generated pytest report in the release job, not user PDFs or downloaded XML.
+  These findings were reviewed, not reported as a warning-free scan.
+
+Download links and exact build evidence are at the
+[1.0.0 release](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/releases/tag/v1.0.0).
+Physical-device validation and signing limitations above still apply.

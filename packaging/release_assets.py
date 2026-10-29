@@ -107,6 +107,14 @@ def prepare():
     print('Prepared',len(entries),'verified release assets; tests:',totals)
 
 
+def github_cli(*args):
+    # GitHub CLI emits UTF-8 even when Windows uses a legacy system code page.
+    command=['gh',*args]
+    if args[0]!='api':command+=['--repo',REPOSITORY]
+    return subprocess.run(command,cwd=ROOT,check=True,capture_output=True,
+                          text=True,encoding='utf8',timeout=600).stdout
+
+
 def publish():
     if os.environ.get('GITHUB_REF')!='refs/heads/main' or os.environ.get('GITHUB_REPOSITORY')!=REPOSITORY:
         raise ValueError('Publication is restricted to the intended repository main branch.')
@@ -118,19 +126,15 @@ def publish():
         path=out/row['name']
         if path.stat().st_size!=row['bytes'] or digest(path)!=row['sha256']:raise ValueError('Release asset changed.')
         assets.append(path)
-    def gh(*args):
-        command=['gh',*args]
-        if args[0]!='api':command+=['--repo',REPOSITORY]
-        return subprocess.run(command,cwd=ROOT,check=True,capture_output=True,text=True,timeout=600).stdout
-    release=json.loads(gh('api','repos/'+REPOSITORY+'/releases/tags/'+TAG))
-    tag=json.loads(gh('api','repos/'+REPOSITORY+'/git/ref/tags/'+TAG))
+    release=json.loads(github_cli('api','repos/'+REPOSITORY+'/releases/tags/'+TAG))
+    tag=json.loads(github_cli('api','repos/'+REPOSITORY+'/git/ref/tags/'+TAG))
     if release['tag_name']!=TAG or tag['object']['sha']!=ORIGINAL_TAG:raise ValueError('Existing public source tag changed; publication stopped.')
     # Make corresponding source accessible before publishing any executable.
     sources=[p for p in assets if p.name.endswith('.tar.xz') or p.name.endswith('-Source.zip')]
-    gh('release','upload',TAG,*map(str,sources),'--clobber')
-    gh('release','upload',TAG,*[str(p) for p in assets if p not in sources],'--clobber')
-    gh('release','edit',TAG,'--title','Mellow PDF Reader 1.0.0','--notes-file',str(out/'release-notes.md'))
-    published=json.loads(gh('api','repos/'+REPOSITORY+'/releases/tags/'+TAG))
+    github_cli('release','upload',TAG,*map(str,sources),'--clobber')
+    github_cli('release','upload',TAG,*[str(p) for p in assets if p not in sources],'--clobber')
+    github_cli('release','edit',TAG,'--title','Mellow PDF Reader 1.0.0','--notes-file',str(out/'release-notes.md'))
+    published=json.loads(github_cli('api','repos/'+REPOSITORY+'/releases/tags/'+TAG))
     available={r['name']:r for r in published['assets']}
     for row in data['files']:
         remote=available.get(row['name'],{})
