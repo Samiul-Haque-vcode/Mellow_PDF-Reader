@@ -1,0 +1,31 @@
+name: Feature request
+description: Suggest a change that keeps Mellow simple and PDF-focused
+title: "[Feature] "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What reading problem are you trying to solve?
+      placeholder: "Describe the situation and friction before describing an implementation."
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe user interaction, not just a feature name.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Project scope
+      options:
+        - label: This proposal is compatible with a offline, PDF-only, reading-focused app.
+          required: false

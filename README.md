@@ -7,13 +7,15 @@
 
 Mellow is a comfortable PDF reader for everyday reading, studying and comparing documents. Compact tabs and one toolbar leave room for your pages. Your PDFs stay in their own folders, without accounts, telemetry, cloud services or library imports.
 
-[Getting started](#getting-started) · [Features](#features) · [PDF tools](#pdf-tools) · [Settings](#settings-and-data) · [Build](#building-on-windows) · [License](#license-and-credits)
+[Getting started](#getting-started) · [Features](#features) · [PDF tools](#pdf-tools) · [Settings](#settings-and-data) · [Build](#building-on-windows) · [Documentation](docs/README.md) · [License](#license-and-credits)
 
 ## Getting started
 
 **Windows 1.0.0 is available** on [Releases](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/releases/tag/v1.0.0). Choose **Setup x64** for installation, or extract the entire **Portable x64** ZIP and run `MellowPDFReader.exe`. Keep its adjacent folders. Packages are unsigned; see [security and signing](SECURITY.md).
 
 For source builds, use the explicitly named **MellowPDFReader-1.0.0-Source.zip** matching the Windows downloads. Separate Qt/PySide source archives are for rebuilding those libraries and are not needed to run Mellow.
+
+### Run from source
 
 Install **Python 3.14.10 or newer 3.14.x, 64-bit**. In the repository folder, open PowerShell and run:
 
@@ -130,6 +132,12 @@ docs/         Release notes and Windows validation checklist
 ```
 
 Tests and development tools are excluded from installed app packages. See [validation evidence](VALIDATION.md) and the [Windows device checklist](docs/windows-validation.md). Report reproducible bugs through [Issues](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/issues), including the version and steps. Avoid uploading private documents or personal backup files.
+
+## Documentation
+
+[User guide](docs/user-guide.md) · [Architecture](docs/architecture.md) · [Development](docs/development.md) · [Distribution](docs/distribution.md) · [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
+
+See the [documentation index](docs/README.md) for validation, security and licensing records.
 
 ## Limitations
 

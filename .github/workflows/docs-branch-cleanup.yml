@@ -1,0 +1,30 @@
+name: Remove merged documentation branch
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/docs-branch-cleanup.yml']
+permissions:
+  contents: read
+jobs:
+  cleanup:
+    if: github.repository == 'Samiul-Haque-vcode/Mellow_PDF-Reader' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[cleanup docs branch]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: write
+    steps:
+      - name: Delete only the reviewed branch after checking merged ancestry
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+          MERGE_COMMIT: ${{ github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected=2724028eaf71a384261134d32e455679fafa6774
+          current=$(gh api "repos/$REPOSITORY/git/ref/heads/docs/organize-repository" --jq '.object.sha')
+          test "$current" = "$expected" || { echo 'Documentation branch changed; keeping it.'; exit 1; }
+          status=$(gh api "repos/$REPOSITORY/compare/$expected...$MERGE_COMMIT" --jq '.status')
+          test "$status" = ahead || test "$status" = identical || { echo 'Branch is not merged; keeping it.'; exit 1; }
+          gh api --method DELETE "repos/$REPOSITORY/git/refs/heads/docs/organize-repository"
+          echo 'Removed merged docs/organize-repository branch. No build or artifacts.'
