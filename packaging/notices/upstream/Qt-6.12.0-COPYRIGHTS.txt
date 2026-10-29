@@ -1,0 +1,252 @@
+Qt 6.12.0 source copyright statements
+
+"// " QT_COPYRIGHT "\n"
+"colon\0colonmonetary\0comma\0congruent\0copyright\0currency\0d\0dagger\0"
+1. Redistributions of source code must retain the above copyright
+2. Redistributions in binary form must reproduce the above copyright
+<< "  --qt\t\t\tadd the Qt copyright header and Qt-specific types and macros" << Qt::endl
+Copyright (C) 2002, 2003  CodeFactory AB
+Copyright (C) 2002, 2003, 2004, 2005 Red Hat, Inc.
+Copyright (C) 2004, 2005 Daniel M. Duley
+Copyright (C) 2004, 2005 Daniel M. Duley., (C) Carsten Haitzler and various contributors., (C) Willem Monsuwe <willem@stack.nl>
+Copyright (C) 2005 The Android Open Source Project
+Copyright (C) 2009 Marco Martin <notmart@gmail.com>
+Copyright (C) 2011 - 2012 Research In Motion
+Copyright (C) 2011 - 2013 BlackBerry Limited. All rights reserved.
+Copyright (C) 2011 - 2014 BlackBerry Limited. All rights reserved.
+Copyright (C) 2011 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Stephen Kelly <stephen.kelly@kdab.com>
+Copyright (C) 2011 Richard J. Moore <rich@kde.org>
+Copyright (C) 2011 Thiago Macieira <thiago@kde.org>
+Copyright (C) 2012 BogDan Vatra <bogdan@kde.org>
+Copyright (C) 2012 Collabora Ltd, author <robin.burchell@collabora.co.uk>
+Copyright (C) 2012 David Faure <faure@kde.org>
+Copyright (C) 2012 Giuseppe D'Angelo <dangelog@gmail.com>.
+Copyright (C) 2012 Jeremy Lainé <jeremy.laine@m4x.org>
+Copyright (C) 2012 Klaralvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Christoph Schleifenbaum <christoph.schleifenbaum@kdab.com>
+Copyright (C) 2012 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+Copyright (C) 2012 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author James Turner <james.turner@kdab.com>
+Copyright (C) 2012 Olivier Goffart <ogoffart@woboq.com>
+Copyright (C) 2012 Research In Motion
+Copyright (C) 2013 - 2014 BlackBerry Limited. All rights reserved.
+Copyright (C) 2013 Aleix Pol Gonzalez <aleixpol@kde.org>
+Copyright (C) 2013 BlackBerry Limited. All rights reserved.
+Copyright (C) 2013 BogDan Vatra <bogdan@kde.org>
+Copyright (C) 2013 David Faure <faure+bluesystems@kde.org>
+Copyright (C) 2013 David Faure <faure@kde.org>
+Copyright (C) 2013 Imagination Technologies Limited, www.imgtec.com
+Copyright (C) 2013 Ivan Komissarov.
+Copyright (C) 2013 John Layt <jlayt@kde.org>
+Copyright (C) 2013 Klaralvdalens Datakonsult AB (KDAB)
+Copyright (C) 2013 Klaralvdalens Datakonsult AB (KDAB).
+Copyright (C) 2013 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+Copyright (C) 2013 Konstantin Ritt
+Copyright (C) 2013 Laszlo Papp <lpapp@kde.org>
+Copyright (C) 2013 Olivier Goffart <ogoffart@woboq.com>
+Copyright (C) 2013 Richard J. Moore <rich@kde.org>.
+Copyright (C) 2013 Ruslan Nigmatullin <euroelessar@yandex.ru>
+Copyright (C) 2013 Samuel Gaist <samuel.gaist@deltech.ch>
+Copyright (C) 2013 Samuel Gaist <samuel.gaist@edeltech.ch>
+Copyright (C) 2013 Teo Mrnjavac <teo@kde.org>
+Copyright (C) 2014 BlackBerry Limited. All rights reserved.
+Copyright (C) 2014 BogDan Vatra <bogdan@kde.org>
+Copyright (C) 2014 Drew Parsons <dparsons@emerall.com>
+Copyright (C) 2014 Governikus GmbH & Co. KG.
+Copyright (C) 2014 Ivan Komissarov
+Copyright (C) 2014 Ivan Komissarov <ABBAPOH@gmail.com>
+Copyright (C) 2014 Jeremy Lainé <jeremy.laine@m4x.org>
+Copyright (C) 2014 John Layt <jlayt@kde.org>
+Copyright (C) 2014 Keith Gardner <kreios4004@gmail.com>
+Copyright (C) 2014 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+Copyright (C) 2014 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Sean Harmer <sean.harmer@kdab.com>
+Copyright (C) 2014 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Volker Krause <volker.krause@kdab.com>
+Copyright (C) 2014 Martin Graesslin <mgraesslin@kde.org>
+Copyright (C) 2014 Olivier Goffart <ogoffart@woboq.com>
+Copyright (C) 2014 Olivier Goffart <ogoffart@woboq.org>
+Copyright (C) 2014 Robin Burchell <robin.burchell@viroteck.net>
+Copyright (C) 2014 by Southwest Research Institute (R)
+Copyright (C) 2015 Alex Trotsenko <alex1973tr@gmail.com>
+Copyright (C) 2015 Green Hills Software
+Copyright (C) 2015 Intel Corporation.
+Copyright (C) 2015 Ivan Komissarov <ABBAPOH@gmail.com>
+Copyright (C) 2015 Keith Gardner <kreios4004@gmail.com>
+Copyright (C) 2015 Klaralvdalens Datakonsult AB (KDAB)
+Copyright (C) 2015 Klaralvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author David Faure <david.faure@kdab.com>
+Copyright (C) 2015 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+Copyright (C) 2015 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Marc Mutz <marc.mutz@kdab.com>
+Copyright (C) 2015 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Tobias Koenig <tobias.koenig@kdab.com>
+Copyright (C) 2015 Konstantin Ritt <ritt.ks@gmail.com>
+Copyright (C) 2015 Mikkel Krautz <mikkel@krautz.dk>
+Copyright (C) 2015 Olivier Goffart <ogoffart@woboq.com>
+Copyright (C) 2015 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+Copyright (C) 2015 ownCloud Inc
+Copyright (C) 2015-2016 Oleksandr Tymoshenko <gonzo@bluezbox.com>
+Copyright (C) 2016 Alex Trotsenko <alex1973tr@gmail.com>
+Copyright (C) 2016 Borgar Ovsthus
+Copyright (C) 2016 David Faure <david.faure@kdab.com>
+Copyright (C) 2016 David Faure <faure@kde.org>
+Copyright (C) 2016 Dmitry Shachnev <mitya57@gmail.com>
+Copyright (C) 2016 Giuseppe D'Angelo <dangelog@gmail.com>.
+Copyright (C) 2016 Intel Corporation.
+Copyright (C) 2016 Jeremy Lainé <jeremy.laine@m4x.org>
+Copyright (C) 2016 Jolla Ltd
+Copyright (C) 2016 Jolla Ltd, author: <giulio.camuffo@jollamobile.com>
+Copyright (C) 2016 Jolla Ltd, author: <gunnar.sletta@jollamobile.com>
+Copyright (C) 2016 Keith Gardner <kreios4004@gmail.com>
+Copyright (C) 2016 Klarälvdalens Datakonsult AB (KDAB).
+Copyright (C) 2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+Copyright (C) 2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author David Faure <david.faure@kdab.com>
+Copyright (C) 2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+Copyright (C) 2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Stephen Kelly <stephen.kelly@kdab.com>
+Copyright (C) 2016 Kurt Pattyn <pattyn.kurt@gmail.com>.
+Copyright (C) 2016 LG Electronics Inc, author: <mikko.levonmaa@lge.com>
+Copyright (C) 2016 LG Electronics Ltd
+Copyright (C) 2016 Laszlo Papp <lpapp@kde.org>
+Copyright (C) 2016 Olivier Goffart <ogoffart@woboq.com>
+Copyright (C) 2016 Pelagicore AG
+Copyright (C) 2016 Research In Motion.
+Copyright (C) 2016 Richard J. Moore <rich@kde.org>
+Copyright (C) 2016 Richard Moore <rich@kde.org>
+Copyright (C) 2016 Robin Burchell <robin.burchell@viroteck.net>
+Copyright (C) 2016 Ruslan Nigmatullin <euroelessar@yandex.ru>
+Copyright (C) 2016 Sune Vuorela <sune@kde.org>
+Copyright (C) 2016 The Qt Company Ltd.
+Copyright (C) 2016 TheQt Company Ltd.
+Copyright (C) 2016 by Southwest Research Institute (R)
+Copyright (C) 2017 Borgar Ovsthus
+Copyright (C) 2017 Erik Larsson.
+Copyright (C) 2017 Eurogiciel, author: <philippe.coval@eurogiciel.fr>
+Copyright (C) 2017 Giulio Camuffo.
+Copyright (C) 2017 ITAGE Corporation, author: <yusuke.binsaki@itage.co.jp>
+Copyright (C) 2017 Intel Corporation.
+Copyright (C) 2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+Copyright (C) 2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Marc Mutz <marc.mutz@kdab.com>
+Copyright (C) 2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Rafael Roquetto <rafael.roquetto@kdab.com>
+Copyright (C) 2017 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+Copyright (C) 2017 QNX Software Systems. All rights reserved.
+Copyright (C) 2017 Robin Burchell <robin.burchell@viroteck.net>
+Copyright (C) 2017 Sy Brand (tartanllama@gmail.com, @TartanLlama)
+Copyright (C) 2017 The Qt Company Ltd.
+Copyright (C) 2017-2018 Red Hat, Inc
+Copyright (C) 2018 Intel Corporation.
+Copyright (C) 2018 Klaralvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author David Faure <david.faure@kdab.com>
+Copyright (C) 2018 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+Copyright (C) 2018 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Marc Mutz <marc.mutz@kdab.com>
+Copyright (C) 2018 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Sérgio Martins <sergio.martins@kdab.com>
+Copyright (C) 2018 Luca Beldi <v.ronin@yahoo.it>
+Copyright (C) 2018 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+Copyright (C) 2018 QNX Software Systems. All rights reserved.
+Copyright (C) 2018 Samuel Gaist <samuel.gaist@idiap.ch>
+Copyright (C) 2018 The Qt Company Ltd.
+Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
+Copyright (C) 2019 Crimson AS <info@crimson.no>
+Copyright (C) 2019 Intel Corporation
+Copyright (C) 2019 Intel Corporation.
+Copyright (C) 2019 Klaralvdalens Datakonsult AB (KDAB)
+Copyright (C) 2019 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+Copyright (C) 2019 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Marc Mutz <marc.mutz@kdab.com>
+Copyright (C) 2019 Klarälvdalens Datakonsult AB.
+Copyright (C) 2019 Mail.ru Group.
+Copyright (C) 2019 Olivier Goffart <ogoffart@woboq.com>
+Copyright (C) 2019 Samuel Gaist <samuel.gaist@idiap.ch>
+Copyright (C) 2019 The Qt Company Ltd.
+Copyright (C) 2019 Volker Krause <vkrause@kde.org>
+Copyright (C) 2020 Aleix Pol Gonzalez <aleixpol@kde.org>
+Copyright (C) 2020 Giuseppe D'Angelo <dangelog@gmail.com>.
+Copyright (C) 2020 Harald Meyer.
+Copyright (C) 2020 Intel Corporation
+Copyright (C) 2020 Intel Corporation.
+Copyright (C) 2020 Klaralvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+Copyright (C) 2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+Copyright (C) 2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Marc Mutz <marc.mutz@kdab.com>
+Copyright (C) 2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Sean Harmer <sean.harmer@kdab.com>
+Copyright (C) 2020 The Qt Company Ltd.
+Copyright (C) 2021 Alex Trotsenko <alex1973tr@gmail.com>
+Copyright (C) 2021 Alex Trotsenko.
+Copyright (C) 2021 David Redondo <qt@david-redondo.de>
+Copyright (C) 2021 Ilya Fedin <fedin-ilja2010@ya.ru>
+Copyright (C) 2021 Intel Corporation.
+Copyright (C) 2021 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+Copyright (C) 2021 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+Copyright (C) 2021 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Marc Mutz <marc.mutz@kdab.com>
+Copyright (C) 2021 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Stephen Kelly <stephen.kelly@kdab.com>
+Copyright (C) 2021 The Qt Company Ltd.
+Copyright (C) 2022 David Edmundson <davidedmundson@kde.org>
+Copyright (C) 2022 David Reondo <kde@david-redondo.de>
+Copyright (C) 2022 Intel Corporation
+Copyright (C) 2022 Intel Corporation.
+Copyright (C) 2022 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+Copyright (C) 2022 Laszlo Papp <lpapp@kde.org>
+Copyright (C) 2022 Mimer Information Technology
+Copyright (C) 2022 The Qt Company Ltd.
+Copyright (C) 2023 Ahmad Samir <a.samirh78@gmail.com>
+Copyright (C) 2023 David Edmundson <davidedmundson@kde.org>
+Copyright (C) 2023 David Reondo <kde@david-redondo.de>
+Copyright (C) 2023 Intel Corporation.
+Copyright (C) 2023 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Marc Mutz <marc.mutz@kdab.com>, Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+Copyright (C) 2023 Samuel Gaist <samuel.gaist@edeltech.ch>
+Copyright (C) 2023 The Qt Company Ltd.
+Copyright (C) 2024 Ahmad Samir <a.samirh78@gmail.com>
+Copyright (C) 2024 Christian Ehrlicher <ch.ehrlicher@gmx.de>
+Copyright (C) 2024 Christoph Cullmann <christoph@cullmann.io>
+Copyright (C) 2024 David Edmundson <davidedmundson@kde.org>
+Copyright (C) 2024 David Redondo <kde@david-redondo.de>
+Copyright (C) 2024 David Reondo <kde@david-redondo.de>
+Copyright (C) 2024 Intel Corporation.
+Copyright (C) 2024 Jie Liu <liujie01@kylinos.cn>
+Copyright (C) 2024 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+Copyright (C) 2024 Loongson Technology Corporation Limited.
+Copyright (C) 2024 Qt Group
+Copyright (C) 2024 The Qt Company Ltd.
+Copyright (C) 2025 Aurélien Brooke <aurelien@bahiasoft.fr>
+Copyright (C) 2025 Intel Corporation
+Copyright (C) 2025 Intel Corporation.
+Copyright (C) 2025 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
+Copyright (C) 2025 Qt Group
+Copyright (C) 2025 The Qt Company Ltd.
+Copyright (C) 2026 David Redondo <kde@david-redondo.de>
+Copyright (C) 2026 Governikus GmbH & Co. KG.
+Copyright (C) 2026 The Qt Company Ltd.
+Copyright (C) 2026 UnionTech Software Technology Co., Ltd.
+Copyright (C) The Qt Company Ltd. and other contributors.
+Copyright (c) 2007-2008, Apple, Inc.
+Copyright (c) 2013-2018 The Khronos Group Inc.
+Copyright (c) 2020 BlackBerry Limited
+Copyright (c) 2023 LLC «V Kontakte»
+Copyright 1985, 1987, 1990, 1998  The Open Group
+Copyright 1996-2001 by
+Copyright 1996-2001, 2002, 2003, 2004 by
+Copyright © 2004-2023 Unicode, Inc.
+Copyright © 2009 Dan Nicholson
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+In addition, as a special exception, the copyright holders listed above give
+QByteArray CppGenerator::copyrightHeader() const
+QByteArray copyright;
+QByteArray copyrightHeader() const;
+QString CppGenerator::privateCopyrightHeader() const
+QString privateCopyrightHeader() const;
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+The above copyright notice and this permission notice (including the next
+The above copyright notice and this permission notice shall be included
+The above copyright notice and this permission notice shall be included in
+bool copyright;
+bool qt_copyright = false;
+copyright (false),
+copyright and related and neighboring rights to this software to the
+copyright header
+copyrightHeader(1),
+define PROGRAMCOPYRIGHT QT_COPYRIGHT
+gen.setCopyright (qt_copyright);
+glgen is Copyright (C) 2012 Klaralvdalens Datakonsult AB (KDAB)
+glgen is Copyright (C) 2013 Klaralvdalens Datakonsult AB (KDAB)
+or comments into the image data (e.g., for storing copyright
+qdbusxml2cpp is Copyright (C) 2015 The Qt Company Ltd.
+qdbusxml2cpp is Copyright (C) 2023 The Qt Company Ltd and other contributors.
+qt_copyright = true;
+unsigned int copyrightHeader : 1;
+void Uic::writeCopyrightHeaderCpp(const DomUI *ui) const
+void Uic::writeCopyrightHeaderPython(const DomUI *ui) const
+void setCopyright (bool t) { copyright = t; }
+void writeCopyrightHeaderCpp(const DomUI *ui) const;
+void writeCopyrightHeaderPython(const DomUI *ui) const;
+which carry the following copyright:
+﻿// Copyright (C) 2019 Volker Krause <vkrause@kde.org>

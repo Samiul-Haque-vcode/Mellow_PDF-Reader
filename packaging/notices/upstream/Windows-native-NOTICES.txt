@@ -1,0 +1,42 @@
+Windows native dependency attribution
+
+Microsoft runtime files
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+The distributed API-set/UCRT, MSVCP140 and VCRUNTIME140 files originate in the
+unmodified CPython, Qt and NumPy Windows wheels. File versions and hashes are
+recorded by the Windows inventory and REVIEW.json. Microsoft runtime terms are
+provided in Microsoft-VC-2022-LICENSE.txt and Microsoft-VC-2026-LICENSE.txt.
+Those end-user terms are not themselves a redistribution grant. Redistribution
+is governed by the applicable Visual Studio/Build Tools license and official
+Redistributable List, under which the hosted Windows toolchain is used to build
+this public open-source project. Preserve runtime files without modifying their
+contents or copyright notices; debug/nonredistributable toolchain files are not
+part of the application.
+
+https://learn.microsoft.com/en-us/visualstudio/releases/2026/redistribution
+https://learn.microsoft.com/en-us/visualstudio/releases/2022/redistribution
+https://visualstudio.microsoft.com/license-terms/
+
+OpenSSL 3.5.9 (CPython native SSL libraries)
+Copyright 1998-2026 The OpenSSL Authors. All rights reserved.
+Licensed under Apache License 2.0; see OpenSSL-3.5.9-LICENSE.txt.
+Source: https://github.com/openssl/openssl/tree/openssl-3.5.9
+
+SQLite (CPython sqlite3.dll)
+SQLite is in the public domain. Its authors disclaim copyright and dedicate
+its code to the public domain. No license purchase is required to use SQLite.
+https://www.sqlite.org/copyright.html
+
+CPython includes further native code governed by its incorporated-software
+notices, including libffi, Expat, libmpdec, zlib-ng, zstd, bzip2 and liblzma.
+See Python-3.14.10-LICENSE.txt, Python-3.14.10-additional-licenses.rst,
+Python-3.14.10-build-dependencies.bat.txt and the accompanying component licenses.
+These terms apply to the respective components, not the entire Mellow app.
+
+Qt image and font acknowledgments
+This software is based in part on the work of the Independent JPEG Group.
+Portions of this software are copyright (c) 2026 The FreeType Project
+(www.freetype.org). All rights reserved.
+The full JPEG, FreeType and additional Qt third-party notices accompany this
+file in Qt-6.12.0-THIRD-PARTY.txt and the Qt PDF notice directory.

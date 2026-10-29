@@ -1,0 +1,87 @@
+[
+  {
+    "path": "upstream/Python-3.14.10-additional-licenses.rst",
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.14.10/Doc/license.rst",
+    "sha256": "8a7329b25131f64b2bea284155f0824876b1af9f4a2f970e6335751d97dfa6dd"
+  },
+  {
+    "path": "upstream/Python-3.14.10-LICENSE.txt",
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.14.10/LICENSE",
+    "sha256": "b0e25a78cffb43f4d92de8b61ccfa1f1f98ecbc22330b54b5251e7b6ba010231"
+  },
+  {
+    "path": "upstream/Python-3.14.10-build-dependencies.bat.txt",
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.14.10/PCbuild/get_externals.bat",
+    "sha256": "4e2a2946a943de2c26825901c4f7aad60f59cce82b400b9baf4f78ef758b6313"
+  },
+  {
+    "path": "upstream/OpenSSL-3.5.9-LICENSE.txt",
+    "url": "https://raw.githubusercontent.com/openssl/openssl/openssl-3.5.9/LICENSE.txt",
+    "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a"
+  },
+  {
+    "path": "upstream/Zlib-ng-2.2.4-LICENSE.txt",
+    "url": "https://raw.githubusercontent.com/zlib-ng/zlib-ng/2.2.4/LICENSE.md",
+    "sha256": "6c9f0d975b41afaa34d22f55bb8986ce69e5cb7ad327cb2b28820cd425edf5ee"
+  },
+  {
+    "path": "upstream/Zstd-1.5.7-LICENSE.txt",
+    "url": "https://raw.githubusercontent.com/facebook/zstd/v1.5.7/LICENSE",
+    "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8"
+  },
+  {
+    "path": "upstream/libffi-LICENSE.txt",
+    "url": "https://raw.githubusercontent.com/libffi/libffi/v3.4.4/LICENSE",
+    "sha256": "2c9c2acb9743e6b007b91350475308aee44691d96aa20eacef8e199988c8c388"
+  },
+  {
+    "path": "upstream/SPDX-Apache-2.0.txt",
+    "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/Apache-2.0.txt",
+    "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff"
+  },
+  {
+    "path": "upstream/SPDX-BSD-2-Clause.txt",
+    "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/BSD-2-Clause.txt",
+    "sha256": "f32fb3b417a194167cfad068223fc975ba96c5960513a10f66a3c28720aec1df"
+  },
+  {
+    "path": "upstream/SPDX-BSD-3-Clause.txt",
+    "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/BSD-3-Clause.txt",
+    "sha256": "5a93d5831e1297ab10fe643e1a631e83be392896da14ee2951285a79012df69d"
+  },
+  {
+    "path": "upstream/SPDX-MIT.txt",
+    "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/MIT.txt",
+    "sha256": "b05785f9f18e6716bab63424b11454513b9943a222595b70411009202fc592b5"
+  },
+  {
+    "path": "upstream/SPDX-CC0-1.0.txt",
+    "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/CC0-1.0.txt",
+    "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+  },
+  {
+    "path": "upstream/SPDX-X11.txt",
+    "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/X11.txt",
+    "sha256": "e1963c9958b93bc2578b34f8ae22cfe205e8c0e7d5be7235cfdbdefbf92a5423"
+  },
+  {
+    "path": "upstream/SPDX-HPND.txt",
+    "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/HPND.txt",
+    "sha256": "4d9ae4a36816338dfa153d1d6f92645c45f25eaa46908d3096922e2431fb571e"
+  },
+  {
+    "path": "upstream/SPDX-Imlib2.txt",
+    "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/Imlib2.txt",
+    "sha256": "19d21c4402df7020d631511274d991393267fd56b59aa014c0be90becd7631e4"
+  },
+  {
+    "path": "upstream/SPDX-Bitstream-Vera.txt",
+    "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/Bitstream-Vera.txt",
+    "sha256": "5b3b4d3cef4029bda987a71f4bfb6087e40c5e91a2cb853fe7f6ccb78d9d8e38"
+  },
+  {
+    "path": "upstream/SPDX-Unicode-3.0.txt",
+    "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/Unicode-3.0.txt",
+    "sha256": "f7db81051789b729fea528a63ec4c938fdcb93d9d61d97dc8cc2e9df6d47f2a1"
+  }
+]

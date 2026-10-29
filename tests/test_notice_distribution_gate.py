@@ -18,6 +18,7 @@ def bundle(tmp_path,monkeypatch):
     source=tmp_path/'source';source.mkdir()
     for name in ('README.md','LICENSE','THIRD_PARTY.md'):shutil.copy2(ROOT/name,source/name)
     shutil.copytree(ROOT/'packaging/notices',source/'packaging/notices')
+    (source/'packaging/notices/REVIEW.json').unlink(missing_ok=True)
     installation=tmp_path/'python';installation.mkdir();(installation/'LICENSE.txt').write_text('Python fixture license')
     monkeypatch.setattr(sys,'base_prefix',str(installation))
     distributions={}
@@ -43,6 +44,7 @@ def record_fixture_review(source,app,report):
     review=dict(format=1,package_versions={r['name']:r['version'] for r in report['packages']},
         python=sys.version.split()[0],platform=sys.platform,architecture=platform.machine(),
         native_files=report['native_files'],files=evidence,
+        native_licenses={name:['LGPL-3.0.txt'] for name in report['native_files']},
         checks={name:dict(complete=True,evidence=['LGPL-3.0.txt']) for name in notices.REVIEW_CHECKS},
         package_notices={r['name']:r['notices'] for r in report['packages']})
     (source/'packaging/notices/REVIEW.json').write_text(json.dumps(review))
@@ -63,7 +65,7 @@ def test_distribution_accepts_matching_recorded_review(bundle):
     assert report['complete_attribution_review'] and not report['collection_issues']
 
 
-@pytest.mark.parametrize('change',['native_changed','native_added','helper_added','version','notice','missing_check','missing_source_review','platform'])
+@pytest.mark.parametrize('change',['native_changed','native_added','helper_added','version','notice','missing_check','missing_source_review','platform','missing_native_notice'])
 def test_stale_or_incomplete_review_blocks_distribution(bundle,change):
     source,app,distributions,report=bundle;review=record_fixture_review(source,app,report)
     review_path=source/'packaging/notices/REVIEW.json'
@@ -76,6 +78,8 @@ def test_stale_or_incomplete_review_blocks_distribution(bundle,change):
         review['checks'].pop('lgpl_source_access');review_path.write_text(json.dumps(review))
     elif change=='platform':
         review['platform']='another-platform';review_path.write_text(json.dumps(review))
+    elif change=='missing_native_notice':
+        review['native_licenses']={};review_path.write_text(json.dumps(review))
     else:
         notices.collect(app,source) # Leave a previously valid review in output.
         review_path.unlink()
@@ -128,3 +132,23 @@ def test_git_windows_line_endings_preserve_upstream_notice_hashes(tmp_path):
     git('add','.gitattributes',relative.as_posix());path.unlink()
     git('checkout-index','--force','--',relative.as_posix())
     assert path.read_bytes()==original
+
+
+def test_actual_optional_native_package_is_included_in_notice_inventory(bundle):
+    source,app,distributions,report=bundle
+    distributions['charset-normalizer']=type(distributions['numpy'])('charset-normalizer')
+    directory=app/'_internal/charset_normalizer';directory.mkdir(parents=True)
+    (directory/'md.pyd').write_bytes(b'native')
+    result=notices.collect(app,source)
+    row=next(r for r in result['packages'] if r['name']=='charset-normalizer')
+    assert row['notices'] and not result['missing_required_packages']
+
+
+def test_commercial_reference_is_not_counted_as_an_open_source_notice(bundle):
+    source,app,distributions,report=bundle
+    d=distributions['PySide6_Essentials'];d.files=['LicenseRef-Qt-Commercial.txt']
+    (d.directory/d.files[0]).write_text('Commercial licensing reference')
+    result=notices.collect(app,source)
+    row=next(r for r in result['packages'] if r['name']=='PySide6_Essentials')
+    assert row['commercial_reference_files']==d.files and not row['notices']
+    assert 'PySide6_Essentials' in result['missing_package_notice_files']

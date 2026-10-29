@@ -68,7 +68,7 @@ def reviewed_notices(output,versions,native_files):
     try:
         data=small_json(output/'REVIEW.json')
         if type(data.get('format')) is not int or data.get('format')!=1 or data.get('package_versions')!=versions:
-            raise ValueError('Attribution review is missing or does not match installed packages.')
+            raise ValueError('REVIEW.json is missing or does not match installed packages.')
         if data.get('python')!=sys.version.split()[0] or data.get('platform')!=sys.platform or data.get('architecture')!=platform.machine():
             raise ValueError('Attribution review does not match this Python/platform/architecture.')
         if not native_files or data.get('native_files')!=native_files:
@@ -88,6 +88,11 @@ def reviewed_notices(output,versions,native_files):
         if set(packages)!=set(versions):raise ValueError('Package notice mappings are incomplete.')
         if any(not isinstance(names,list) or not names or not set(names)<=files.keys() for names in packages.values()):
             raise ValueError('Package notices need hashed review evidence.')
+        native_licenses=data['native_licenses']
+        if set(native_licenses)!=set(native_files):
+            raise ValueError('Native library notice mappings are incomplete.')
+        if any(not isinstance(names,list) or not names or not set(names)<=files.keys() for names in native_licenses.values()):
+            raise ValueError('Native library notices need hashed review evidence.')
         return dict(valid=True,checks=list(REVIEW_CHECKS),package_notices=packages)
     except (OSError,ValueError,TypeError,KeyError,AttributeError,RecursionError) as error:
         return dict(valid=False,reason=str(error),required_checks=list(REVIEW_CHECKS))
@@ -109,16 +114,20 @@ def collect(distribution, root=ROOT):
            'PyInstaller is a build tool; its bootloader is distributed with the app.',
            'Qt PDF embeds PDFium and other components; see Qt-PDF-LICENSES.txt.',
            'This inventory is evidence, not a declaration of complete attribution.','']
-    for name in PACKAGES:
+    package_names=list(PACKAGES)
+    if (output.parent/'_internal/charset_normalizer').is_dir():package_names.append('charset-normalizer')
+    for name in package_names:
         try: dist=metadata.distribution(name)
         except metadata.PackageNotFoundError: continue
         urls=dist.metadata.get_all('Project-URL',[])
         license_name=dist.metadata.get('License-Expression',dist.metadata.get('License','See package/source license'))
-        row=dict(name=name,version=dist.version,license=license_name,urls=urls,notices=[])
+        row=dict(name=name,version=dist.version,license=license_name,urls=urls,notices=[],commercial_reference_files=[])
         lines.extend([f'## {name} {dist.version}',license_name,*urls])
         for item in dist.files or []:
-            if any(term in str(item).lower() for term in ('license','copying','notice','copyright')):
+            if any(term in str(item).lower() for term in ('license','licence','copying','notice','copyright')):
                 source=Path(dist.locate_file(item))
+                if source.name=='LicenseRef-Qt-Commercial.txt':
+                    row['commercial_reference_files'].append(str(item));continue
                 if source.is_file():
                     dest=output/name/str(item).replace('..','parent')
                     dest.parent.mkdir(parents=True,exist_ok=True)
@@ -152,7 +161,7 @@ def collect(distribution, root=ROOT):
     if recorded_review['valid']:
         for row in inventory:
             row['notices']=sorted(set(row['notices']+recorded_review['package_notices'][row['name']]))
-    missing_packages=sorted(set(PACKAGES)-versions.keys())
+    missing_packages=sorted(set(package_names)-versions.keys())
     missing_notices=[row['name'] for row in inventory if not row['notices']]
     issues=[]
     if missing_packages:issues.append('Required packages not installed: '+', '.join(missing_packages))

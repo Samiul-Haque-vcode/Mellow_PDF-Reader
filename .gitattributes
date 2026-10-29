@@ -1,2 +1,4 @@
 # Preserve upstream notice bytes so recorded hashes also match Windows checkouts.
 packaging/notices/** -text
+# Upstream license text is retained verbatim, including original whitespace.
+packaging/notices/upstream/** -whitespace

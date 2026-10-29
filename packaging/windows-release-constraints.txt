@@ -1,0 +1,8 @@
+# Exact versions reviewed for the Windows 1.0.0 distribution.
+PySide6_Essentials==6.12.0
+PySide6_Pdf==6.12.0.140
+shiboken6==6.12.0
+numpy==2.5.4
+pypdf==6.21.4
+charset-normalizer==3.5.2
+pyinstaller==6.22.3

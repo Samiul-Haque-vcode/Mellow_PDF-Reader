@@ -1,0 +1,16 @@
+[
+  {
+    "path": "upstream/Microsoft-VC-2022-LICENSE.txt",
+    "page": "https://visualstudio.microsoft.com/license-terms/vs2022-cruntime/",
+    "url": "https://visualstudio.microsoft.com/wp-content/uploads/2021/09/Visual-C-Runtime-2015-2022-License-1.docx",
+    "original_sha256": "f1e3d56ceb2ad68aae0711b910375009e651ac5530fa0760f0dea6e81e54fae1",
+    "sha256": "bda30bbdd0b5b09097902e58eb58f2bd24ed3407008a98242eca1c5096feb1b9"
+  },
+  {
+    "path": "upstream/Microsoft-VC-2026-LICENSE.txt",
+    "page": "https://visualstudio.microsoft.com/license-terms/vs2026-ga-visualcpp-v14-redist-runtime/",
+    "url": "https://visualstudio.microsoft.com/wp-content/uploads/2025/10/Visual-C-V14-License-Redistributable_and_Runtime_ENU.docx",
+    "original_sha256": "08651651a7602fc7c0e2763de0fde1ff9f868df2780597cd1775ee9d6441c783",
+    "sha256": "2057fc53b68bdff9ebe3ef5d84e01219bf6df684e559205f2ca147631e871f86"
+  }
+]
