@@ -1,4 +1,4 @@
-"""Only the optional OpenGL fallback is removed; PDF and image tools stay intact."""
+"""Unused native components are pruned only when their import checks allow it."""
 import importlib.util
 from pathlib import Path
 import pytest

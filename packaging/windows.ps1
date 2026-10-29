@@ -9,7 +9,7 @@ if ($LASTEXITCODE -ne 0) { throw "Python setup failed" }
 $Python = ".\.venv\Scripts\python.exe"
 & $Python packaging/runtime_policy.py
 if ($LASTEXITCODE -ne 0) { throw "Install a supported, patched Python 3.14 runtime." }
-& $Python -m pip install -r requirements-dev.txt
+& $Python -m pip install -c packaging/windows-release-constraints.txt -r requirements-dev.txt
 if ($LASTEXITCODE -ne 0) { throw "Dependency installation failed" }
 & $Python -m pytest -q
 if ($LASTEXITCODE -ne 0) { throw "Tests failed" }

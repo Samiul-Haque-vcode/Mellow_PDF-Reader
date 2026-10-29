@@ -28,22 +28,43 @@ packaged rendering and installer/uninstaller checks passed. Defender reported
 were uploaded. These results describe that commit/build, not a newly compiled
 follow-up binary.
 
-Binary redistribution remains blocked by the incomplete version-specific Qt/PDFium attribution review described in [THIRD_PARTY.md](THIRD_PARTY.md). No trusted signing identity is configured. 1.0.0 publishes source only, without an installer or portable binary and without claiming a binary malware scan.
+The original source-only release is being supplemented through the dedicated
+Windows distribution workflow. The new package uses Python **3.14.10**, Essentials
+and PDF wheels without unused Qt Addons/WebEngine, and guarded removal of Mesa
+and the duplicate Qt OpenSSL backend. The existing public source tag is preserved;
+the matching source ZIP identifies the updated packaging commit.
 
 Physical-device checks for touchpad gestures, mixed DPI, Snap Layouts, transitions, accessibility and diverse real-world documents remain in [the Windows checklist](docs/windows-validation.md). Source tests and automated runner checks do not replace them.
 
-## Attribution-check follow-up
+## Distribution and attribution follow-up — 30 October 2026
 
-This packaging-only follow-up collected nine upstream Qt PDF 6.140.0 notices
-(about 70 KB), with original-page and extracted-text hashes. Source-version
-matching, other native-library review and LGPL source-access work remain pending.
-The collector now inventories actual bundled native files and validates a recorded
-review against versions, platform/Python and evidence hashes. Binary artifact
-uploads and DistributionReady builds reject incomplete records.
+- Clean minimal-dependency Linux environment: **694 passed, 1 skipped, 1 warning**
+  in 360.85 seconds. The skipped test requires native Windows Authenticode. No
+  reader feature code changed in this packaging follow-up.
+- [Windows inventory 40929960790](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/actions/runs/40929960790):
+  **51 focused tests passed**, frozen real-PDF and PDF-tool rendering passed.
+  Attribution review matched all **132 native files**, **64 hashed evidence files**
+  and **seven package versions**, with zero collection issues. No Actions artifacts
+  were uploaded.
+- Windows package removal: Mesa 20,639,544 bytes; optional Qt OpenSSL plugin
+  317,752 bytes; its unused SSL/crypto DLLs 8,459,032 bytes. These removals total
+  **29,416,328 bytes** before compression. The build checks other import tables
+  before removing the optional TLS dependencies; Python SSL and Windows Schannel
+  remain. Packaged rendering also passed with QT_OPENGL=software.
+- Fresh advisory lookup on the seven pinned Windows runtime/build distributions:
+  **0 known advisories, 0 skipped distributions**. This is not a native-component
+  vulnerability scan or a guarantee against undisclosed vulnerabilities.
+- Added release-source integrity/publication guards and packaging checks:
+  **47 passed, 1 Windows-only skip** on Linux. Cases reject changed native files,
+  unregistered native notices, bad source download hashes/sizes/paths, failing test
+  reports and publication from another repository or branch.
+- Qt source matching is supported by verified archives and the public maintainer
+  clarification in [PYSIDE-3485](https://qt-project.atlassian.net/browse/PYSIDE-3485).
+  Complete notices, per-native mappings and replacement instructions are in
+  packaging/notices. The strict gate does not complete a legal review by itself.
 
-Focused notice-gate, build-verification and release-preparation tests: **36 passed,
-1 Windows-only skip** on Linux. Cases include changed/added native binaries,
-updated dependency versions, corrupted notices, missing review checks, stale output
-reviews and evidence paths escaping the license folder. No reader code changed,
-so the prior full-suite results remain the functional baseline; this follow-up
-has not run a new native Windows build or published binaries.
+The dedicated release job must pass the full Windows suite, native caption/aids,
+freeze/installer/portable checks, notice gate, Defender scan and source-archive
+hash verification before uploading executables. Its Verification ZIP records the
+actual final build's test totals and security results. A publisher certificate
+and physical-device validation remain separate limitations.

@@ -1,52 +1,67 @@
-# Dependency and distribution notes
+# Dependencies and redistribution
 
-Mellow PDF Reader's own source is licensed under [MIT](LICENSE). This grant does
-not replace the licenses of Qt, PySide6, PDFium, Python or other dependencies.
+Mellow PDF Reader's own code is [MIT-licensed](LICENSE). Dependencies retain
+their respective licenses; the app's MIT grant does not relicense those libraries.
 
-| Component | Terms / distribution approach |
+| Component | Terms and included materials |
 | --- | --- |
-| Python | PSF license and included third-party terms; collect the installed interpreter's LICENSE.txt. |
-| Qt / PySide6 / Shiboken | LGPL/GPL/commercial choices vary by component. Mellow uses the LGPL option for its dynamically loaded Qt components and includes LGPL 3 and GPL 3 texts. |
-| PDFium / Chromium components in Qt PDF | BSD-family and additional third-party terms. Review the notices for the exact Qt PDF build. |
-| NumPy | BSD-3-Clause plus bundled native-library notices included by its wheel. |
+| Qt / PySide / Shiboken | LGPL 3 option for the dynamically loaded components, with LGPL 3/GPL 3 texts, source copyright headers and Qt module attribution files. |
+| Qt PDF / embedded PDFium | Qt PDF LGPL 3 plus PDFium/Chromium and incorporated third-party licenses. Nine Qt PDF notice snapshots and supplemental source notices are included. |
+| Python 3.14.10 | PSF license and incorporated-software notices, including its native parsing, compression and SSL libraries. |
+| NumPy | BSD-3-Clause plus the Windows wheel's BLAS, LAPACK and compiler-runtime notices. |
 | pypdf | BSD-3-Clause. |
-| PyInstaller bootloader | GPL with its bootloader exception; the exception permits distributing an application under its own license. Include its actual installed notices. |
+| charset-normalizer | MIT; included when its optional native extensions are bundled. |
+| PyInstaller bootloader | GPL with its bootloader exception, allowing the reader to retain its own license. |
+| Microsoft Windows / Visual C++ runtimes | Separate Microsoft terms and redistribution conditions; not MIT/LGPL components. |
 
-`python packaging/collect_notices.py dist/MellowPDFReader` copies the source MIT
-license, this document, available installed-package notices and the Python
-license beside the app. `licenses/DEPENDENCIES.json` records exact versions,
-source URLs, copied notice paths and gaps, including a missing Python notice.
-The build verification manifest independently records installed package versions
-and hashes every bundled file. The collector runs at build time, without network
-access; the reader does not download licenses or depend on a server.
+## Notices and corresponding sources
 
-Keep Qt DLLs/shared libraries separate from the executable. Do not prohibit
-reverse engineering needed to debug modifications to LGPL libraries. Users may
-replace the dynamically loaded libraries with compatible builds. Source and build
-instructions are at [Qt for Python](https://doc.qt.io/qtforpython-6/building_from_source/index.html)
-and [Qt PDF licensing](https://doc.qt.io/qt-6/qtpdf-licensing.html).
-Include the corresponding library source or a license-compliant source offer
-when the chosen distribution method requires it; general upstream links alone
-are not represented as fulfilling every LGPL redistribution obligation.
+The installed `licenses/` folder contains the complete collected texts, provenance,
+exact package inventory and recorded native-file review. Source copies live in
+[packaging/notices](packaging/notices). Original upstream notice text is preserved,
+including its line endings; commercial-license reference files alone are not
+counted as LGPL notices.
 
-The development wheels lack the complete attribution materials. Nine upstream Qt
-PDF 6.140.0 notices have now been collected in `packaging/notices/qt-pdf-6.140.0/`.
-`qt-pdf-manifest.json` records their documentation URLs, versions and hashes. The
-collector checks the snapshot against the installed PySide6_Pdf version and
-verifies file integrity. A documentation-version match does not establish the
-wheel's exact source revisions.
+The corresponding Qt, PySide and Shiboken source archives are pinned by URL,
+size and SHA-256 in [SOURCE-ARCHIVES.json](packaging/notices/SOURCE-ARCHIVES.json).
+The release workflow publishes these archives as separate optional assets before
+publishing executables. They are not embedded in the installer or committed as
+large archives to this repository. See [SOURCES.md](packaging/notices/SOURCES.md)
+for exact versions, the Qt maintainer's binding-source confirmation, build
+instructions and compatible-library replacement.
 
-Binary redistribution still needs four completed checks: exact Qt PDF source
-matching, Qt runtime notices, all bundled native-library notices, and LGPL
-corresponding-source access. See [the release checklist](docs/release-checklist.md)
-for evidence requirements and the REVIEW.json format. The collector verifies the
-recorded package versions, platform, Python, native-file inventory and evidence
-hashes, then reports specific gaps. It does not perform the legal review itself.
+Qt/PySide/Shiboken remain separate shared libraries in the onedir package. Users
+may modify or replace compatible LGPL libraries and reverse engineer as needed to
+debug those modifications. Mellow imposes no replacement-library signature check.
+The PDF source is the Qt SDK 6.140.0 extension archive for Qt 6.12.0, not an assumed
+match based solely on documentation version numbers.
 
-Use `python packaging/collect_notices.py dist/MellowPDFReader --require-complete`
-or `packaging/windows.ps1 -DistributionReady` to reject incomplete evidence.
-GitHub binary artifact uploads also require this check. The 1.0.0 release remains
-source-only; no installer is published by this follow-up change. Application MIT
-licensing, matching evidence and passed malware checks do not independently
-resolve redistribution obligations. Trusted publisher signing is a separate,
-optional identity step and is not the attribution blocker.
+## Distribution checks
+
+`python packaging/collect_notices.py dist/MellowPDFReader --require-complete`
+checks the actual package versions, Windows/Python architecture, every native-file
+hash and all recorded evidence hashes against `REVIEW.json`. Each bundled native
+library must have a nonempty mapping to hashed license evidence. Missing, changed
+or unreviewed components block release. A manifest records the review work; it
+does not perform legal analysis or establish compliance merely by existing.
+
+The package excludes unused Qt Addons/WebEngine Python wheels, Pillow, reportlab,
+pytest and the optional Mesa renderer. An unused Qt OpenSSL plugin and its second
+SSL build are removed only after import-table checks. Windows Schannel and
+Python's current SSL libraries remain. The reader uses CPU PDF raster rendering.
+
+Build verification separately fingerprints the main executable, installer and
+all other distributed files. The release workflow requires passing Windows tests,
+packaged-PDF checks, install/uninstall checks and an available successful Defender
+scan. Publisher signing is optional and distinct from dependency attribution.
+See the [release checklist](docs/release-checklist.md).
+
+## Acknowledgments
+
+This software is based in part on the work of the Independent JPEG Group.
+
+Portions of this software are copyright © 2026 The FreeType Project
+(www.freetype.org). All rights reserved.
+
+Complete copyright notices and applicable conditions accompany their respective
+components in `licenses/`; these acknowledgments do not replace those texts.

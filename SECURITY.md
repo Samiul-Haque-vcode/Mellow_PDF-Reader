@@ -23,7 +23,7 @@ Get-FileHash .\MellowPDFReader-Setup.exe -Algorithm SHA256
 Get-AuthenticodeSignature .\MellowPDFReader-Setup.exe
 ```
 
-Compare hashes only with the report for the same build. 1.0.0 is a source release; it has no published installer or binary scan report.
+Compare hashes only with the report for the same build. Windows release downloads include SHA256SUMS.txt and a Verification ZIP; the latter records the exact commit, runtime, signature status and available scan evidence. Separate corresponding-source archives are not required for normal installation.
 
 ## Building with a signing identity
 

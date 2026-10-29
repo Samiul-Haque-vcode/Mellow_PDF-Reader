@@ -5,57 +5,42 @@ packaged rendering, install/uninstall checks and the available Defender scan.
 That binary was unsigned and was not published because attribution review
 was incomplete. The source release tag is unchanged by this follow-up work.
 
-## Dependency notices — remaining work
+## Dependency notices — completed review
 
-Nine Qt PDF 6.140.0 license-text snapshots are now stored in
-`packaging/notices/qt-pdf-6.140.0/`. The adjacent manifest records provenance,
-versions and SHA-256 hashes. This covers collected upstream text, not proof
-of the exact wheel build's source provenance or the whole app's dependencies.
+The [Windows inventory run](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/actions/runs/40929960790)
+passed **51 focused checks**, frozen real-PDF/tool rendering and the exact-version
+attribution gate. It matched **132 native files**, **64 hashed evidence files**
+and **seven packages**, with no collection issues. This is a recorded maintainer
+review with reproducible checks, not legal or security certification.
 
-Complete these four checks against the actual Windows onedir build:
-
-| Check key | Evidence to collect |
+| Check | Evidence |
 | --- | --- |
-| `qt_pdf_source_match` | Exact Qt PDF/PDFium/Chromium source revisions and build configuration corresponding to the shipped wheel, including third-party notices. Current documentation version alone is insufficient. |
-| `qt_runtime_notices` | Qt/PySide/Shiboken copyright and license materials, plus third-party terms for the Qt modules actually shipped. |
-| `native_library_notices` | Notices for every bundled native dependency, including Python, NumPy's bundled libraries, image/font/compression libraries and the PyInstaller bootloader. |
-| `lgpl_source_access` | Corresponding source access and required build/install information for LGPL components under the chosen distribution method. Preserve compatible library replacement and permitted reverse engineering. General upstream links alone do not establish this check. |
+| Qt PDF source match | Verified Qt SDK PDF/WebEngine 6.140.0 source archive for Qt 6.12.0, binding source tag confirmed by Qt maintainers in PYSIDE-3485. |
+| Qt runtime notices | Source copyright headers, module attribution metadata and complete referenced licenses, alongside LGPL 3/GPL 3 texts. |
+| Native-library notices | Individual DLL/Python-extension mappings to hashed Python, NumPy, charset-normalizer, Qt and Microsoft notice materials. |
+| Corresponding source access | Pinned complete source archives, directly published as optional release assets before executables; build/replacement instructions in SOURCES.md. |
 
-Run `python packaging/collect_notices.py dist/MellowPDFReader`. Its
-`licenses/DEPENDENCIES.json` lists package versions, missing notices and actual
-bundled native library/helper-file hashes. The main Mellow executable is excluded
-from this mapping because signing changes its bytes; the build verification
-manifest fingerprints it separately. This is an inventory, not a completed review.
+`packaging/notices/REVIEW.json` records exact package versions, Python, platform,
+architecture, native hashes, evidence hashes, four review checks, package-notice
+mappings and **native_licenses** mappings for every native file. Any missing or
+changed library, source evidence or dependency version blocks the strict gate.
+No cross-platform or automatically regenerated review is accepted as equivalent.
 
-After doing the review, store `packaging/notices/REVIEW.json` with:
-
-- `format`: integer `1`.
-- `python`, `platform`, `architecture`: the build's exact Python version,
-  `sys.platform` and `platform.machine()`.
-- `package_versions`: every inventory package name mapped to its exact version.
-- `native_files`: the inventory's full relative-file-to-SHA-256 mapping.
-- `files`: relative license/evidence paths mapped to SHA-256, including required
-  source-access documentation. Keep extra reviewed evidence in `packaging/notices/`.
-- `checks`: each of the four keys above mapped to an object with `complete: true`
-  and a nonempty `evidence` list naming hashed entries in `files`.
-- `package_notices`: every inventory package mapped to a nonempty list of its
-  notice paths, also registered in `files`.
-
-Do not create a record just to bypass the check. It records completed maintainer
-work; matching hashes do not independently establish license compliance.
-Any changed native file, package version, platform or evidence invalidates it.
-Do not reuse a Linux review for Windows.
-
-For a distribution candidate, run:
+For the reviewed Windows candidate, run:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File packaging/windows.ps1 -DistributionReady
 ```
 
-This rejects incomplete notice/review evidence and requires a successful Defender
-scan. Requested GitHub binary artifact uploads also run the strict notice check.
-Ordinary local builds remain available for testing. Pushes with `[skip ci]` do
-not run Actions. No binary release is enabled by adding the notice snapshots.
+The script pins reviewed dependency versions, rejects incomplete notices and
+requires a successful available Defender scan. The dedicated Windows distribution
+workflow also runs the full regression suite, native GUI checks, frozen and
+portable rendering, installer/registry/uninstaller checks and personal-data cleanup.
+It uploads directly to the existing 1.0.0 release, without Actions artifacts.
+
+The public source tag remains unchanged. The explicitly named Source ZIP matches
+the build commit in BUILD.json; GitHub's automatic tag archives retain the original
+source-release commit. Separate library sources have verified SHA-256 checksums.
 
 ## Publisher signing — optional identity step
 

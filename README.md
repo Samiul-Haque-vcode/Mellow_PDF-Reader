@@ -11,7 +11,9 @@ Mellow is a comfortable PDF reader for everyday reading, studying and comparing 
 
 ## Getting started
 
-**1.0.0 is a source release.** A Windows installer is not included: the exact bundled Qt/PDFium third-party attribution review remains incomplete. See [distribution notes](THIRD_PARTY.md). The source can be run using the instructions below; source archives are available from [Releases](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/releases).
+Windows downloads are on [Releases](https://github.com/Samiul-Haque-vcode/Mellow_PDF-Reader/releases/tag/v1.0.0) once their release checks complete. Choose **Setup x64** for installation, or extract the entire **Portable x64** ZIP and run `MellowPDFReader.exe`. Keep its adjacent folders. Packages are unsigned; see [security and signing](SECURITY.md).
+
+For source builds, use the explicitly named **MellowPDFReader-1.0.0-Source.zip** matching the Windows downloads. Separate Qt/PySide source archives are for rebuilding those libraries and are not needed to run Mellow.
 
 Install **Python 3.14.10 or newer 3.14.x, 64-bit**. In the repository folder, open PowerShell and run:
 
@@ -109,9 +111,9 @@ The script creates an environment, runs tests, builds with PyInstaller, collects
 | `dist/MellowPDFReader-Setup.exe` | Installer |
 | `dist/build-verification/` | Hashes, package inventory, signature and available Defender results |
 
-Keep the executable with its adjacent dependencies. Complete the attribution requirements in [THIRD_PARTY.md](THIRD_PARTY.md) before redistributing binaries. Use `packaging/windows.ps1 -DistributionReady` to require the recorded notice review and a successful Defender scan; see the [release checklist](docs/release-checklist.md). Builds are unsigned unless you provide a trusted signing identity; see [security and signing](SECURITY.md). Mellow does not install a certificate or alter Windows protection settings.
+Keep the executable with its adjacent dependencies. Dependency upgrades require updating the exact-version notice review described in [THIRD_PARTY.md](THIRD_PARTY.md). Use `packaging/windows.ps1 -DistributionReady` to require the recorded notice review and a successful Defender scan; see the [release checklist](docs/release-checklist.md). Builds are unsigned unless you provide a trusted signing identity; see [security and signing](SECURITY.md). Mellow does not install a certificate or alter Windows protection settings.
 
-Ordinary pushes do not start builds. The workflow supports manual builds, with artifact uploads off by default. The explicit 1.0.0 release commit requests Windows checks and source-release publication; it does not publish incomplete binary packages.
+Ordinary source pushes do not start Windows builds. Explicit inventory/release commits and manual workflows run checks. The distribution workflow uploads directly to Releases after verification; it does not upload Actions artifacts. Corresponding library sources are separate optional release assets.
 
 ## Development and verification
 

@@ -1,0 +1,101 @@
+name: Windows 1.0.0 distribution
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/windows-release.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: mellow-windows-release-1.0.0
+  cancel-in-progress: false
+jobs:
+  build-and-publish:
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[windows release 1.0.0]'))
+    runs-on: windows-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14.10'
+          check-latest: true
+          cache: pip
+      - name: Check version and runtime
+        run: |
+          python -c "from mellow import __version__; assert __version__ == '1.0.0'"
+          python packaging/runtime_policy.py
+      - run: python -m pip install -c packaging/windows-release-constraints.txt -r requirements-dev.txt
+      - name: Check native caption and reading aids
+        run: |
+          python packaging/caption_smoke.py
+          if ($LASTEXITCODE -ne 0) { throw "Caption checks failed" }
+          python packaging/reading_aids_smoke.py
+          if ($LASTEXITCODE -ne 0) { throw "Reading aid checks failed" }
+      - name: Run complete Windows regressions
+        run: python -m pytest -q --junitxml=test-results.xml
+      - name: Build raster reader
+        run: python -m PyInstaller --noconfirm --clean --noupx --exclude-module PIL --exclude-module reportlab --exclude-module pytest --windowed --onedir --version-file packaging/version_info.txt --name MellowPDFReader --icon mellow/assets/mellow.ico --add-data "mellow/assets:mellow/assets" --collect-all PySide6.QtPdf --collect-all PySide6.QtPdfWidgets run_mellow.py
+      - run: python packaging/prepare_distribution.py dist/MellowPDFReader
+      - name: Require exact native hashes and complete attribution
+        run: python packaging/collect_notices.py dist/MellowPDFReader --require-complete
+      - name: Check frozen reader and PDF tools
+        env:
+          QT_OPENGL: software
+        run: python packaging/smoke_test.py dist/MellowPDFReader/MellowPDFReader.exe
+      - name: Build installer
+        run: |
+          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" packaging/mellow.iss
+          if ($LASTEXITCODE -ne 0) { throw "Installer compilation failed" }
+      - name: Require Defender scan and record unsigned status
+        run: python packaging/verify_windows.py --require-defender
+      - name: Smoke test installed application
+        shell: pwsh
+        run: |
+          $target = Join-Path $env:RUNNER_TEMP "MellowInstalled"
+          $choicePath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.pdf\UserChoice'
+          $beforeDefault = (Get-ItemProperty -LiteralPath $choicePath -ErrorAction SilentlyContinue).ProgId
+          $installer = Start-Process -FilePath "dist/MellowPDFReader-Setup.exe" -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/DIR=$target" -Wait -PassThru
+          if ($installer.ExitCode -ne 0) { throw "Installer failed" }
+          $classes = 'Registry::HKEY_LOCAL_MACHINE\Software\Classes'
+          $program = "$classes\MellowPDFReader.PDF"
+          $openWith = "$classes\.pdf\OpenWithProgids"
+          $command = (Get-Item -LiteralPath "$program\shell\open\command").GetValue('')
+          $expected = '"' + (Join-Path $target 'MellowPDFReader.exe') + '" "%1"'
+          if ($command -ne $expected) { throw "PDF file-opening command is not correctly quoted" }
+          if ('MellowPDFReader.PDF' -notin (Get-Item -LiteralPath $openWith).GetValueNames()) { throw "Missing Open with registration" }
+          $application = (Get-Item -LiteralPath "$classes\Applications\MellowPDFReader.exe\shell\open\command").GetValue('')
+          if ($application -ne $expected) { throw "Missing application registration" }
+          $afterDefault = (Get-ItemProperty -LiteralPath $choicePath -ErrorAction SilentlyContinue).ProgId
+          if ($afterDefault -ne $beforeDefault) { throw "Installer changed the user's default PDF application" }
+          Write-Host "PDF Open with registration and quoted file command verified; default app unchanged."
+          python packaging/smoke_test.py "$target/MellowPDFReader.exe"
+          if ($LASTEXITCODE -ne 0) { throw "Installed application failed" }
+          $uninstaller = Start-Process -FilePath "$target/unins000.exe" -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART" -Wait -PassThru
+          if ($uninstaller.ExitCode -ne 0) { throw "Uninstall failed" }
+          if (Test-Path "$target/MellowPDFReader.exe") { throw "Uninstall left the executable behind" }
+          if (Test-Path -LiteralPath $program) { throw "Uninstall left the PDF program registration behind" }
+          $remaining = Get-Item -LiteralPath $openWith -ErrorAction SilentlyContinue
+          if ($remaining -and 'MellowPDFReader.PDF' -in $remaining.GetValueNames()) { throw "Uninstall left the Open with entry behind" }
+          Write-Host "PDF Open with registration removed after uninstall."
+      - name: Verify uninstall removes personal data and updates preserve it
+        shell: pwsh
+        run: ./packaging/check_uninstall.ps1
+      - name: Make portable folder
+        shell: pwsh
+        run: |
+          Copy-Item -Recurse dist/MellowPDFReader dist/MellowPDFReader-Portable
+          Set-Content dist/MellowPDFReader-Portable/portable.ini "Mellow PDF Reader portable metadata marker"
+      - name: Check portable executable
+        run: python packaging/smoke_test.py dist/MellowPDFReader-Portable/MellowPDFReader.exe
+      - name: Prepare verified release downloads and corresponding sources
+        run: python packaging/release_assets.py
+      - name: Publish downloads directly without Actions artifacts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python packaging/release_assets.py --publish
