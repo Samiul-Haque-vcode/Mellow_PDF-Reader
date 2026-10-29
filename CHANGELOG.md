@@ -5,6 +5,9 @@ limits are recorded in [VALIDATION.md](VALIDATION.md).
 
 ## 1.0.0
 
+- Refreshed the app, Windows icon, installer and README with the approved curved
+  open-book artwork and transparent corners.
+
 - Published Windows x64 installer and portable downloads, matching source,
   verification reports and separate corresponding library sources.
 - Fixed numeric/scroll boundary handling and unsafe oversized/non-finite metadata inputs.
@@ -14,9 +17,9 @@ limits are recorded in [VALIDATION.md](VALIDATION.md).
 - Fixed legacy-Windows-encoding cases in release-file reading and GitHub CLI responses.
 - Consolidated the documentation guides and contribution templates on main.
 
-The published Windows build passed 723 tests. The later publishing-script
+The earlier Windows build passed 723 tests. The later publishing-script
 follow-up passed 16 focused Windows tests. These results apply to the commits
-recorded in VALIDATION.md. Builds remain unsigned; physical-device validation
+recorded in VALIDATION.md; refreshed-download evidence is recorded separately. Builds remain unsigned; physical-device validation
 has documented gaps.
 
 ## Earlier source updates

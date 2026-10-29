@@ -219,7 +219,7 @@ def test_extract_tool_from_home_without_open_document(app,pdf,tmp_path,monkeypat
     w.close()
 
 
-def test_vector_brand_assets_and_toolbar_actions(app,tmp_path):
+def test_brand_assets_and_toolbar_actions(app,tmp_path):
     from PIL import Image
     assert not application_icon().pixmap(64,64).isNull()
     assert not icon('copy').isNull()

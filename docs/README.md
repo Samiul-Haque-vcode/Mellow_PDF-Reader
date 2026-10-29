@@ -25,6 +25,6 @@ Mellow 1.0.0 is available as a Windows installer and portable download. Start wi
 - [Third-party terms](../THIRD_PARTY.md): licenses and the reviewed native inventory.
 - [Corresponding sources](../packaging/notices/SOURCES.md): source archives and library replacement.
 
-The published Windows build passed 723 tests. The later publishing-script fix
+The earlier Windows build passed 723 tests. The later publishing-script fix
 passed its own 16-test Windows verification. These are recorded results for their
 respective commits, not a claim that every later change has rerun the full suite.

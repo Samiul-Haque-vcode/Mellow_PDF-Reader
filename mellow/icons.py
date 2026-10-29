@@ -1,4 +1,4 @@
-"""Small original vector icons, shared by the toolbar and Home."""
+"""Shared toolbar vector icons and application artwork."""
 from functools import lru_cache
 from pathlib import Path
 from PySide6.QtCore import Qt,QByteArray,QRectF
@@ -54,4 +54,4 @@ def icon(name,color='#4d655c'):
 
 
 def application_icon():
-    return QIcon(str(ASSETS/'logo.svg'))
+    return QIcon(str(ASSETS/'logo.png'))

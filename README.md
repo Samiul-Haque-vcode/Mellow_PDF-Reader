@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="mellow/assets/logo.svg" alt="Mellow open-book logo" width="88">
+  <img src="mellow/assets/logo.png" alt="Mellow open-book logo" width="88">
 </p>
 <h1 align="center">Mellow PDF Reader</h1>
 <p align="center"><strong>A softer way to read.</strong></p>

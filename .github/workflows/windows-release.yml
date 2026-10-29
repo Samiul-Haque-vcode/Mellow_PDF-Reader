@@ -99,3 +99,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python packaging/release_assets.py --publish
+      - name: Verify published downloads match this build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python packaging/verify_published.py --commit "${{ github.sha }}"
